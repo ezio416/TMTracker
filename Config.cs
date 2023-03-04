@@ -4,7 +4,7 @@
 namespace TMT {
     class Config {
         public class Settings {
-            public string accountID { get; set; }
+            public string accountId { get; set; }
             public SettingsAPI api { get; set; }
             public SettingsMyMaps myMaps { get; set; }
         }
@@ -15,13 +15,13 @@ namespace TMT {
             public int waitMilliseconds { get; set; }
         }
         public class SettingsMyMaps {
-            public List<string> ignoreMapIDs { get; set; }
+            public List<string> ignoreMapIds { get; set; }
             public bool ignoreRegionContinent { get; set; }
             public bool ignoreRegionWorld { get; set; }
         }
 
 
-        public static string accountID;
+        public static string accountId;
         public static SettingsAPI api;
         public static string cacheDir = FileSystem.Current.CacheDirectory;
         public static string configFile;
@@ -62,7 +62,7 @@ namespace TMT {
 
                 // defaultConfig should be cloned instead of reading from the new file
                 Settings _config = LoadJson(File.ReadAllText(configFile));
-                accountID = _config.accountID;
+                accountId = _config.accountId;
                 api = _config.api;
                 myMaps = _config.myMaps;
 
