@@ -4,7 +4,7 @@
 namespace TMT {
 	public static class MauiProgram {
 		public static MauiApp CreateMauiApp() {
-            _ = Config.Init();
+            Config.Init();
 			return MauiApp.CreateBuilder()
 				.UseMauiApp<App>()
 				.ConfigureFonts(fonts => {
