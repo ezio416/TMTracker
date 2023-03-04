@@ -8,14 +8,12 @@ namespace TMT {
             public SettingsAPI api { get; set; }
             public SettingsMyMaps myMaps { get; set; }
         }
-
         public class SettingsAPI {
             public string agent { get; set; }
             public string password { get; set; }
             public string username { get; set; }
             public int waitMilliseconds { get; set; }
         }
-
         public class SettingsMyMaps {
             public List<string> ignoreMapIDs { get; set; }
             public bool ignoreRegionContinent { get; set; }
