@@ -103,7 +103,7 @@ namespace TMT {
 
             foreach (string group in idGroups) {
                 Various.ApiWait();
-                using HttpResponseMessage response = await clients[0].GetAsync($"mapRecords/?accountIdList={Config.accountID}&mapIdList={group}");
+                using HttpResponseMessage response = await clients[0].GetAsync($"mapRecords/?accountIdList={Config.accountId}&mapIdList={group}");
                 string responseString = await response.Content.ReadAsStringAsync();
                 Records.Record[] records = JsonSerializer.Deserialize<Records.Record[]>(responseString);
                 foreach (Records.Record record in records) {

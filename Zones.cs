@@ -7,8 +7,8 @@ namespace TMT {
     class Zones {
         public class Zone {
             public string name { get; set; }
-            public string parentID { get; set; }
-            public string zoneID { get; set; }
+            public string parentId { get; set; }
+            public string zoneId { get; set; }
         }
 
 
@@ -30,10 +30,10 @@ namespace TMT {
 
             foreach (Zone zone in responseZones)
                 parentLookup.Add(
-                    zone.zoneID,
+                    zone.zoneId,
                     new Dictionary<string, string>() {
                         {"name", zone.name},
-                        {"parentId", zone.parentID}
+                        {"parentId", zone.parentId}
                     }
                 );
 
