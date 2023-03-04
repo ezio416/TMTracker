@@ -23,29 +23,30 @@ namespace TMT {
 
         public static string accountId;
         public static SettingsAPI api;
-        public static string cacheDir = FileSystem.Current.CacheDirectory;
         public static string configFile;
         public static Settings defaultConfig;
         public static bool freshConfig;
         public static SettingsMyMaps myMaps;
 
 #if ANDROID
-        public static string appDir = "/storage/emulated/0/Android/data/com.ezio416.tmtracker";
+        public static string dirCache = "/storage/emulated/0/Android/data/com.ezio416.tmtracker/cache";
+        public static string dirFiles = "/storage/emulated/0/Android/data/com.ezio416.tmtracker/files";
         public static string os = "android";
 #endif
 #if WINDOWS
-        public static string appDir = FileSystem.Current.AppDataDirectory;
+        public static string dirCache = FileSystem.Current.CacheDirectory;
+        public static string dirFiles = FileSystem.Current.AppDataDirectory;
         public static string os = "windows";
 #endif
 
 
         static bool _init;
-        public static async Task<bool> Init() {
+        public static async void Init() {
             //static string DumpJson(Settings content) { return System.Text.Json.JsonSerializer.Serialize(content); }
             static Settings LoadJson(string content) { return System.Text.Json.JsonSerializer.Deserialize<Settings>(content); }
             if (!_init) {
                 string internalFile = "appsettings.json";
-                configFile = Path.Combine(appDir, internalFile);
+                configFile = Path.Combine(dirFiles, internalFile);
 
                 using Stream stream = await FileSystem.Current.OpenAppPackageFileAsync(internalFile);
                 using StreamReader reader = new(stream);
@@ -68,7 +69,6 @@ namespace TMT {
 
                 _init = true;
             }
-            return true;
         }
 
         //public static async Task<bool> Write() {

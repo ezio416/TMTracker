@@ -15,7 +15,7 @@ namespace TMT {
                 waitMilliseconds.Text += Config.api.waitMilliseconds;
                 ignoreRegionContinent.Text += Config.myMaps.ignoreRegionContinent;
                 ignoreRegionWorld.Text += Config.myMaps.ignoreRegionWorld;
-                appDir.Text += Config.appDir;
+                appDir.Text += Config.dirFiles;
                 configFile.Text += Config.configFile;
                 freshConfig.Text += Config.freshConfig;
                 os.Text += Config.os;
