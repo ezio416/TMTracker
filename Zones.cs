@@ -39,7 +39,7 @@ namespace TMT {
 
             foreach (KeyValuePair<string, Dictionary<string, string>> zone in new Dictionary<string, Dictionary<string, string>>(parentLookup)) {
                 string zoneId = zone.Key;
-                List<string> zoneParts = new() {parentLookup[zoneId]["name"]};
+                List<string> zoneParts = new() { parentLookup[zoneId]["name"] };
 
                 string parentId = parentLookup[zoneId]["parentId"];
                 if (parentId != null) {

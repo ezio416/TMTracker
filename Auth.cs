@@ -51,7 +51,7 @@ namespace TMT {
 
             client2.DefaultRequestHeaders.Add("Authorization", token2);
 
-            _clients = new[] {client1, client2};
+            _clients = new[] { client1, client2 };
             return (HttpClient[])_clients;
         }
     }
