@@ -1,7 +1,7 @@
 ﻿using Android.App;
 using Android.Runtime;
 
-namespace TMTracker;
+namespace TMT;
 
 [Application]
 public class MainApplication : MauiApplication

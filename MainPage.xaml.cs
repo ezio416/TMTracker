@@ -1,20 +1,27 @@
-﻿namespace TMTracker {
+﻿// c 2023-02-28
+// m 2023-03-03
+
+namespace TMT {
 	public partial class MainPage : ContentPage {
-		int count = 0;
+        public MainPage() { InitializeComponent(); }
 
-		public MainPage() {
-			InitializeComponent();
-		}
-
-		private void OnCounterClicked(object sender, EventArgs e) {
-			count++;
-
-			if (count == 1)
-				CounterBtn.Text = $"Clicked {count} time";
-			else
-				CounterBtn.Text = $"Clicked {count} times";
-
-			SemanticScreenReader.Announce(CounterBtn.Text);
-		}
-	}
+        static bool clicked;
+		private void OnClicked(object sender, EventArgs e) {
+            if (!clicked) {
+                accountID.Text += Config.accountID;
+                agent.Text += Config.api.agent;
+                password.Text += Config.api.password;
+                username.Text += Config.api.username;
+                waitMilliseconds.Text += Config.api.waitMilliseconds;
+                ignoreRegionContinent.Text += Config.myMaps.ignoreRegionContinent;
+                ignoreRegionWorld.Text += Config.myMaps.ignoreRegionWorld;
+                appDir.Text += Config.appDir;
+                configFile.Text += Config.configFile;
+                freshConfig.Text += Config.freshConfig;
+                os.Text += Config.os;
+                CounterBtn.Text = "loaded";
+                clicked = true;
+            }
+        }
+    }
 }
