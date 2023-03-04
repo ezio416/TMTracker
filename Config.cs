@@ -1,5 +1,5 @@
 // c 2023-01-15
-// m 2023-03-03
+// m 2023-03-04
 
 namespace TMT {
     class Config {
@@ -42,7 +42,7 @@ namespace TMT {
 
 
         static bool _init;
-        public static async void Init() {
+        public static async Task<bool> Init() {
             //static string DumpJson(Settings content) { return System.Text.Json.JsonSerializer.Serialize(content); }
             static Settings LoadJson(string content) { return System.Text.Json.JsonSerializer.Deserialize<Settings>(content); }
             if (!_init) {
@@ -62,6 +62,7 @@ namespace TMT {
                     if (!File.Exists(configFile)) throw new FileNotFoundException("appsettings.json failed to write");
                 }
 
+                // defaultConfig should be cloned instead of reading from the new file
                 Settings _config = LoadJson(File.ReadAllText(configFile));
                 accountID = _config.accountID;
                 api = _config.api;
@@ -69,6 +70,11 @@ namespace TMT {
 
                 _init = true;
             }
+            return true;
         }
+
+        //public static async Task<bool> Write() {
+        //    return false;
+        //}
     }
 }
