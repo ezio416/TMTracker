@@ -1,8 +1,8 @@
 ﻿<maui:MauiWinUIApplication
-    x:Class="TMTracker.WinUI.App"
+    x:Class="TMT.WinUI.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:maui="using:Microsoft.Maui"
-    xmlns:local="using:TMTracker.WinUI">
+    xmlns:local="using:TMT.WinUI">
 
 </maui:MauiWinUIApplication>
