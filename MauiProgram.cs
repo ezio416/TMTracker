@@ -1,17 +1,36 @@
 ﻿// c 2023-02-28
-// m 2023-03-04
+// m 2023-03-05
+
+using TMT.ViewModels;
 
 namespace TMT {
 	public static class MauiProgram {
 		public static MauiApp CreateMauiApp() {
             Config.Init();
-			return MauiApp.CreateBuilder()
+			var builder = MauiApp.CreateBuilder()
 				.UseMauiApp<App>()
 				.ConfigureFonts(fonts => {
 					fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
 					fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-				})
-				.Build();
+                    fonts.AddFont("CascadiaCode.ttf", "CascadiaCode");
+                });
+				
+			builder.Services.AddSingleton<HomePage>();
+            builder.Services.AddSingleton<HomeViewModel>();
+
+            builder.Services.AddSingleton<MyMapsPage>();
+            builder.Services.AddSingleton<MyMapsViewModel>();
+
+            builder.Services.AddSingleton<MyRecordsPage>();
+            builder.Services.AddSingleton<MyRecordsViewModel>();
+
+            builder.Services.AddSingleton<QueryPage>();
+            builder.Services.AddSingleton<QueryViewModel>();
+
+            builder.Services.AddSingleton<SettingsPage>();
+            builder.Services.AddSingleton<SettingsViewModel>();
+
+            return builder.Build();
 		}
     }
 }
