@@ -15,7 +15,7 @@ namespace TMT {
             public int waitMilliseconds { get; set; }
         }
         public class SettingsMyMaps {
-            public List<string> ignoreMapIds { get; set; }
+            public string[] ignoreMapIds { get; set; }
             public bool ignoreRegionContinent { get; set; }
             public bool ignoreRegionWorld { get; set; }
         }
@@ -29,11 +29,13 @@ namespace TMT {
         public static SettingsMyMaps myMaps;
 
 #if ANDROID
-        public static string dirCache = "/storage/emulated/0/Android/data/com.ezio416.tmtracker/cache";
-        public static string dirFiles = "/storage/emulated/0/Android/data/com.ezio416.tmtracker/files";
+        public static string dirApp = "/storage/emulated/0/Android/data/com.ezio416.tmtracker";
+        public static string dirCache = $"{dirApp}/cache";
+        public static string dirFiles = $"{dirApp}/files";
         public static string os = "android";
 #endif
 #if WINDOWS
+        public static string dirApp = Directory.GetParent(FileSystem.Current.AppDataDirectory).ToString();
         public static string dirCache = FileSystem.Current.CacheDirectory;
         public static string dirFiles = FileSystem.Current.AppDataDirectory;
         public static string os = "windows";
@@ -55,6 +57,8 @@ namespace TMT {
 
                 if (!File.Exists(configFile)) {
                     freshConfig = true;
+                    Directory.CreateDirectory(dirCache);
+                    Directory.CreateDirectory(dirFiles);
                     using FileStream outputStream = File.OpenWrite(configFile);
                     using StreamWriter streamWriter = new(outputStream);
                     await streamWriter.WriteAsync(defaultContent);
