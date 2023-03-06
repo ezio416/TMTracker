@@ -5,10 +5,10 @@
        xmlns:local="clr-namespace:TMT"
        Shell.FlyoutBehavior="Disabled"
        Shell.NavBarIsVisible="False"
-       Shell.TabBarBackgroundColor="#222222"
+       Shell.TabBarBackgroundColor="{StaticResource Primary}"
        Shell.TabBarForegroundColor="White"
        Shell.TabBarTitleColor="White"
-       Shell.TabBarUnselectedColor="#555555">
+       Shell.TabBarUnselectedColor="#000000">
 
     <TabBar>
         <Tab x:Name="HomeTab"
