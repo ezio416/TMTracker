@@ -1,9 +1,7 @@
 // c 2023-01-13
-// m 2023-03-04
+// m 2023-03-06
 
-using System.Text.Json;
-
-namespace TMT {
+namespace TMT.Core {
     class Zones {
         public class Zone {
             public string name { get; set; }
@@ -62,7 +60,6 @@ namespace TMT {
                 }
                 _zones[zoneId] = string.Join(',', zoneParts.Take(zoneParts.Count - ignoreLevel));
             }
-
             return _zones;
         }
     }

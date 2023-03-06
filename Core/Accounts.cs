@@ -1,10 +1,7 @@
 // c 2023-01-13
-// m 2023-03-04
+// m 2023-03-06
 
-using System.Text.Json;
-using System.Text.Json.Serialization;
-
-namespace TMT {
+namespace TMT.Core {
     class Accounts {
         public class Account {
             public string accountId { get; set; }

@@ -1,9 +1,6 @@
 ﻿// c 2023-03-05
 // m 2023-03-06
 
-using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-
 namespace TMT.ViewModels {
     public partial class SettingsViewModel : ObservableObject {
         const string accountIdTitleInitial = "Account ID";

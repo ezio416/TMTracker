@@ -1,10 +1,7 @@
 // c 2023-01-10
-// m 2023-03-04
+// m 2023-03-06
 
-using System.Text;
-using System.Text.Json;
-
-namespace TMT {
+namespace TMT.Core {
     class Auth {
         private record class _Ticket(string ticket);
         private record class _Token(string accessToken);

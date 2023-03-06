@@ -1,9 +1,7 @@
 // c 2023-01-15
-// m 2023-03-05
+// m 2023-03-06
 
-using System.Text.Json;
-
-namespace TMT {
+namespace TMT.Core {
     class Config {
         public class Settings {
             public string accountId { get; set; }
@@ -35,8 +33,7 @@ namespace TMT {
         public static string dirCache = $"{dirApp}/cache";
         public static string dirFiles = $"{dirApp}/files";
         public static string os = "android";
-#endif
-#if WINDOWS
+#elif WINDOWS
         public static string dirApp = Directory.GetParent(FileSystem.Current.AppDataDirectory).ToString();
         public static string dirCache = FileSystem.Current.CacheDirectory;
         public static string dirFiles = FileSystem.Current.AppDataDirectory;
