@@ -4,12 +4,9 @@
              x:Class="TMT.HomePage"
              xmlns:viewmodels="clr-namespace:TMT.ViewModels"
              x:DataType="viewmodels:HomeViewModel"
-             BackgroundColor="#333333">
+             Padding="5"
+             BackgroundColor="{StaticResource Gray700}">
 
-    <VerticalStackLayout>
-
-        <Label Text="home"/>
-
-    </VerticalStackLayout>
+    <Label Text="home"/>
 
 </ContentPage>

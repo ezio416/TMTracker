@@ -1,6 +1,7 @@
 ﻿// c 2023-02-28
 // m 2023-03-05
 
+using CommunityToolkit.Maui;
 using TMT.ViewModels;
 
 namespace TMT {
@@ -9,7 +10,8 @@ namespace TMT {
             Config.Init();
 			var builder = MauiApp.CreateBuilder()
 				.UseMauiApp<App>()
-				.ConfigureFonts(fonts => {
+                .UseMauiCommunityToolkit()
+                .ConfigureFonts(fonts => {
 					fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
 					fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                     fonts.AddFont("CascadiaCode.ttf", "CascadiaCode");

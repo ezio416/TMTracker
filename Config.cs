@@ -1,5 +1,7 @@
 // c 2023-01-15
-// m 2023-03-04
+// m 2023-03-05
+
+using System.Text.Json;
 
 namespace TMT {
     class Config {
@@ -44,8 +46,7 @@ namespace TMT {
 
         static bool _init;
         public static async void Init() {
-            //static string DumpJson(Settings content) { return System.Text.Json.JsonSerializer.Serialize(content); }
-            static Settings LoadJson(string content) { return System.Text.Json.JsonSerializer.Deserialize<Settings>(content); }
+            static Settings LoadJson(string content) { return JsonSerializer.Deserialize<Settings>(content); }
             if (!_init) {
                 string internalFile = "appsettings.json";
                 configFile = Path.Combine(dirFiles, internalFile);
@@ -62,7 +63,6 @@ namespace TMT {
                     using FileStream outputStream = File.OpenWrite(configFile);
                     using StreamWriter streamWriter = new(outputStream);
                     await streamWriter.WriteAsync(defaultContent);
-                    if (!File.Exists(configFile)) throw new FileNotFoundException("appsettings.json failed to write");
                 }
 
                 // defaultConfig should be cloned instead of reading from the new file
@@ -75,8 +75,11 @@ namespace TMT {
             }
         }
 
-        //public static async Task<bool> Write() {
-        //    return false;
-        //}
+        public static bool Write() {
+            Settings config = new() { accountId = accountId, api = api, myMaps = myMaps };
+            string content = JsonSerializer.Serialize(config, new JsonSerializerOptions { WriteIndented = true });
+            File.WriteAllText(configFile, content);
+            return true;
+        }
     }
 }

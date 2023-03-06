@@ -4,12 +4,9 @@
              x:Class="TMT.MyMapsPage"
              xmlns:viewmodels="clr-namespace:TMT.ViewModels"
              x:DataType="viewmodels:MyMapsViewModel"
-             BackgroundColor="#333333">
-    
-    <VerticalStackLayout>
+             Padding="5"
+             BackgroundColor="{StaticResource Gray700}">
 
-        <Label Text="maps"/>
+    <Label Text="maps"/>
 
-    </VerticalStackLayout>
-    
 </ContentPage>
