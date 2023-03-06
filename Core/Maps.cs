@@ -1,11 +1,9 @@
 // c 2023-01-12
-// m 2023-03-04
+// m 2023-03-06
 
-using System.Text.Json;
-using System.Text.Json.Serialization;
-
-namespace TMT {
+namespace TMT.Core {
     class Maps {
+        record _Campaign(JsonElement playlist) { public CampaignMap[] maps { get; set; } }
         record _CampaignList(JsonElement campaignList);
         record _CampaignRecord(int time);
         record _MapList(JsonElement mapList);
@@ -45,7 +43,6 @@ namespace TMT {
             public override float silverTime { get; set; }
             public override string uploadedIsoUtc { get; set; }
         }
-        record _Campaign(JsonElement playlist) { public CampaignMap[] maps { get; set; } }
 
 
         // using L1+2
