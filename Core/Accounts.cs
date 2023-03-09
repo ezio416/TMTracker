@@ -1,5 +1,5 @@
 // c 2023-01-13
-// m 2023-03-06
+// m 2023-03-08
 
 namespace TMT.Core {
     class Accounts {
@@ -49,7 +49,6 @@ namespace TMT.Core {
             }
 
             foreach (string group in groups) {
-                Various.Print("getting account info\n");
                 Various.ApiWait();
                 using HttpResponseMessage response = await clients[0].GetAsync($"accounts/displayNames/accountIdList={group}");
                 string responseString = await response.Content.ReadAsStringAsync();
@@ -60,7 +59,6 @@ namespace TMT.Core {
                     accounts.Add(account.accountId, account);
                 }
 
-                Various.Print("getting club tags\n");
                 Various.ApiWait();
                 using HttpResponseMessage responseClub = await clients[0].GetAsync($"accounts/clubTags/accountIdList={group}");
                 string responseClubString = await responseClub.Content.ReadAsStringAsync();
