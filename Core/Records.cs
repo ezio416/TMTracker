@@ -1,5 +1,5 @@
 // c 2023-01-13
-// m 2023-03-06
+// m 2023-03-08
 
 namespace TMT.Core {
     class Records {
@@ -26,7 +26,6 @@ namespace TMT.Core {
 
         public static async Task<Dictionary<string, Record>> GetMoreRecordInfo(string[][] accountGroups, string[] mapIds, Dictionary<string, Record> records) {
             foreach (string[] group in accountGroups) {
-                Various.Print($"getting more record info\n");
                 Dictionary<string, Record> recordsLookup = await GetMultiMapRecords(group, mapIds);
                 foreach (KeyValuePair<string, Record> record in recordsLookup) {
                     try {

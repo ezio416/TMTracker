@@ -1,5 +1,5 @@
 ﻿// c 2023-03-05
-// m 2023-03-06
+// m 2023-03-08
 
 namespace TMT.ViewModels {
     public partial class SettingsViewModel : ObservableObject {
@@ -183,6 +183,7 @@ namespace TMT.ViewModels {
                 await Application.Current.MainPage.DisplayAlert("Success?", "Nothing to revert", "OK");
                 return;
             }
+
             AccountId = accountIdInitial;
             AccountIdTitle = accountIdTitleInitial;
 
@@ -207,19 +208,18 @@ namespace TMT.ViewModels {
 
         [RelayCommand]
         async Task SaveClicked() {
-            bool confirm = await Application.Current.MainPage.DisplayAlert(
+            if (!await Application.Current.MainPage.DisplayAlert(
                 "Question", $"Are you sure you want to save settings to the file at {Config.configFile} ?", "YES", "CANCEL"
-            );
-            if (!confirm)
+            ))
                 return;
 
-            _ = Config.Write();
+            Config.Write();
 
-            accountIdInitial = (string)AccountId.Clone();
-            agentInitial = (string)Agent.Clone();
-            passwordInitial = (string)Password.Clone();
-            usernameInitial = (string)Username.Clone();
-            waitTimeInitial = (string)WaitTime.Clone();
+            accountIdInitial = AccountId;
+            agentInitial = Agent;
+            passwordInitial = Password;
+            usernameInitial = Username;
+            waitTimeInitial = WaitTime;
             ignoreContinentInitial = IgnoreContinent;
             ignoreWorldInitial = IgnoreWorld;
 
