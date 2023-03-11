@@ -1,5 +1,5 @@
 // c 2023-01-13
-// m 2023-03-09
+// m 2023-03-10
 
 namespace TMT.Core {
     public class Records {
@@ -49,7 +49,7 @@ namespace TMT.Core {
             Various.ApiWait();
             using HttpResponseMessage response = await clients[0].GetAsync($"mapRecords/?accountIdList={accountIdsString}&mapIdList={mapIdsString}");
             string responseString = await response.Content.ReadAsStringAsync();
-            Record[] records = JsonSerializer.Deserialize<Record[]>(responseString);
+            List<Record> records = JsonSerializer.Deserialize<List<Record>>(responseString);
 
             Dictionary<string, Record> recordsLookup = new();
             foreach (Record record in records) {
@@ -61,7 +61,7 @@ namespace TMT.Core {
         }
 
         // using L2
-        public static async Task<Record[]> GetSingleMapRecords(string mapUid, int count = 100) {
+        public static async Task<List<Record>> GetSingleMapRecords(string mapUid, int count = 100) {
             HttpClient[] clients = await Auth.GetClients();
             Dictionary<string, string> zones = await Zones.Get();
 
@@ -72,7 +72,7 @@ namespace TMT.Core {
             string responseString = await response.Content.ReadAsStringAsync();
             JsonElement tops = JsonSerializer.Deserialize<_Tops>(responseString).tops[0];
             JsonElement top = JsonSerializer.Deserialize<_Top>(tops).top;
-            Record[] records = JsonSerializer.Deserialize<Record[]>(top);
+            List<Record> records = JsonSerializer.Deserialize<List<Record>>(top);
             foreach (Record record in records) {
                 record.mapUid = mapUid;
                 record.time /= 1000;
@@ -82,9 +82,8 @@ namespace TMT.Core {
             return records;
         }
 
-        public static Record[] SortRecords(Dictionary<string, Record> records) {
-            var sortedRecordsEnum = from entry in records orderby entry.Value.timestampUnix descending select entry.Value;
-            return sortedRecordsEnum.ToArray();
+        public static List<Record> SortRecords(Dictionary<string, Record> records) {
+            return (from entry in records orderby entry.Value.timestampUnix descending select entry.Value).ToList();
         }
     }
 }
