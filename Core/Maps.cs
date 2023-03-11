@@ -1,5 +1,5 @@
 // c 2023-01-12
-// m 2023-03-06
+// m 2023-03-09
 
 namespace TMT.Core {
     class Maps {
@@ -7,42 +7,6 @@ namespace TMT.Core {
         record _CampaignList(JsonElement campaignList);
         record _CampaignRecord(int time);
         record _MapList(JsonElement mapList);
-        public abstract class Map {
-            public string authorName { get; set; }
-            [JsonPropertyName("author")] public string authorId { get; set; }
-            public abstract float authorTime { get; set; }
-            public abstract float bronzeTime { get; set; }
-            public abstract Uri downloadUrl { get; set; }
-            public abstract float goldTime { get; set; }
-            public string mapId { get; set; }
-            [JsonPropertyName("name")] public string mapName { get; set; }
-            [JsonPropertyName("uid")] public abstract string mapUid { get; set; }
-            [JsonPropertyName("medal")] public int personalMedal { get; set; }
-            public float personalTime { get; set; }
-            public Records.Record[] records { get; set; }
-            public abstract float silverTime { get; set; }
-            public Uri thumbnailUrl { get; set; }
-            public abstract string uploadedIsoUtc { get; set; }
-            [JsonPropertyName("uploadTimestamp")] public int uploadedUnix { get; set; }
-        }
-        public class CampaignMap : Map {
-            [JsonPropertyName("authorScore")] public override float authorTime { get; set; }
-            [JsonPropertyName("bronzeScore")] public override float bronzeTime { get; set; }
-            [JsonPropertyName("fileUrl")] public override Uri downloadUrl { get; set; }
-            [JsonPropertyName("goldScore")] public override float goldTime { get; set; }
-            public override string mapUid { get; set; }
-            [JsonPropertyName("silverScore")] public override float silverTime { get; set; }
-            [JsonPropertyName("timestamp")] public override string uploadedIsoUtc { get; set; }
-        }
-        public class MyMap : Map {
-            public override float authorTime { get; set; }
-            public override float bronzeTime { get; set; }
-            public override Uri downloadUrl { get; set; }
-            public override float goldTime { get; set; }
-            [JsonPropertyName("uid")] public override string mapUid { get; set; }
-            public override float silverTime { get; set; }
-            public override string uploadedIsoUtc { get; set; }
-        }
 
 
         // using L1+2
