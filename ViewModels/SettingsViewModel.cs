@@ -45,7 +45,7 @@ namespace TMT.ViewModels {
 
         [ObservableProperty]
         string[] ignoreMapIds = Config.myMaps.ignoreMapIds;
-        string[] ignoreMapIdsInitial = Config.myMaps.ignoreMapIds;
+        //string[] ignoreMapIdsInitial = Config.myMaps.ignoreMapIds;
 
         const string ignoreRegionsTitleInitial = "Ignore Regions";
         const string ignoreRegionsTitleChanged = ignoreRegionsTitleInitial + "*";
