@@ -1,5 +1,5 @@
 ﻿// c 2023-03-06
-// m 2023-03-09
+// m 2023-03-11
 
 global using System.Text;
 global using System.Text.Json;
@@ -10,3 +10,5 @@ global using CommunityToolkit.Mvvm.Input;
 
 global using TMT.Core;
 global using TMT.Models;
+global using TMT.Pages;
+global using TMT.ViewModels;

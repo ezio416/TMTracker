@@ -1,10 +1,10 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
-             x:Class="TMT.Pages.HomePage"
+             x:Class="TMT.Pages.RecentRecordsPage"
              xmlns:viewmodels="clr-namespace:TMT.ViewModels"
-             x:DataType="viewmodels:HomeViewModel"
+             x:DataType="viewmodels:RecentRecordsViewModel"
              Padding="5"
              BackgroundColor="{StaticResource Gray700}">
 
@@ -12,6 +12,6 @@
         <mct:StatusBarBehavior StatusBarColor="{StaticResource Gray700}"/>
     </ContentPage.Behaviors>
 
-    <Label Text="home"/>
+    <Label Text="recent records"/>
 
 </ContentPage>

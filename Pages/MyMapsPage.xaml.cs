@@ -1,9 +1,7 @@
 // c 2023-03-04
-// m 2023-03-05
+// m 2023-03-11
 
-using TMT.ViewModels;
-
-namespace TMT {
+namespace TMT.Pages {
 	public partial class MyMapsPage : ContentPage {
 		public MyMapsPage(MyMapsViewModel vm) {
 			InitializeComponent();
