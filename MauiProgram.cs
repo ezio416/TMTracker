@@ -1,8 +1,7 @@
 ﻿// c 2023-02-28
-// m 2023-03-05
+// m 2023-03-11
 
 using CommunityToolkit.Maui;
-using TMT.ViewModels;
 
 namespace TMT {
 	public static class MauiProgram {
@@ -28,6 +27,9 @@ namespace TMT {
 
             builder.Services.AddSingleton<QueryPage>();
             builder.Services.AddSingleton<QueryViewModel>();
+
+            builder.Services.AddSingleton<RecentRecordsPage>();
+            builder.Services.AddSingleton<RecentRecordsViewModel>();
 
             builder.Services.AddSingleton<SettingsPage>();
             builder.Services.AddSingleton<SettingsViewModel>();

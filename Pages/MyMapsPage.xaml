@@ -4,7 +4,7 @@
              xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
              xmlns:models="clr-namespace:TMT.Models"
              xmlns:viewmodels="clr-namespace:TMT.ViewModels"
-             x:Class="TMT.MyMapsPage"
+             x:Class="TMT.Pages.MyMapsPage"
              x:DataType="viewmodels:MyMapsViewModel"
              Padding="5"
              BackgroundColor="{StaticResource Gray700}">
