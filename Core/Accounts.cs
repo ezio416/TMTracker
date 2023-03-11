@@ -1,5 +1,5 @@
 // c 2023-01-13
-// m 2023-03-08
+// m 2023-03-11
 
 namespace TMT.Core {
     class Accounts {
@@ -7,7 +7,7 @@ namespace TMT.Core {
             public string accountId { get; set; }
             [JsonPropertyName("displayName")] public string accountName { get; set; }
             public ClubTag clubTag { get; set; }
-            public Records.Record[] records { get; set; }
+            public Record[] records { get; set; }
             [JsonPropertyName("timestamp")] public string timestampIsoUtc { get; set; }
             public int timestampUnix { get; set; }
         }
@@ -50,7 +50,7 @@ namespace TMT.Core {
 
             foreach (string group in groups) {
                 Various.ApiWait();
-                using HttpResponseMessage response = await clients[0].GetAsync($"accounts/displayNames/accountIdList={group}");
+                using HttpResponseMessage response = await clients[0].GetAsync($"accounts/displayNames/?accountIdList={group}");
                 string responseString = await response.Content.ReadAsStringAsync();
                 Account[] responseAccounts = JsonSerializer.Deserialize<Account[]>(responseString);
                 foreach (Account account in responseAccounts) {
@@ -60,7 +60,7 @@ namespace TMT.Core {
                 }
 
                 Various.ApiWait();
-                using HttpResponseMessage responseClub = await clients[0].GetAsync($"accounts/clubTags/accountIdList={group}");
+                using HttpResponseMessage responseClub = await clients[0].GetAsync($"accounts/clubTags/?accountIdList={group}");
                 string responseClubString = await responseClub.Content.ReadAsStringAsync();
                 ClubTag[] clubTags = JsonSerializer.Deserialize<ClubTag[]>(responseClubString);
                 foreach (ClubTag clubTag in clubTags) {

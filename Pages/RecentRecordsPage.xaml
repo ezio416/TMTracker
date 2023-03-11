@@ -2,9 +2,10 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
+             xmlns:models="clr-namespace:TMT.Models"
              x:Class="TMT.Pages.RecentRecordsPage"
              xmlns:viewmodels="clr-namespace:TMT.ViewModels"
-             x:DataType="viewmodels:RecentRecordsViewModel"
+             x:DataType="viewmodels:MyMapsViewModel"
              Padding="5"
              BackgroundColor="{StaticResource Gray700}">
 
@@ -12,6 +13,32 @@
         <mct:StatusBarBehavior StatusBarColor="{StaticResource Gray700}"/>
     </ContentPage.Behaviors>
 
-    <Label Text="recent records"/>
-
+    <CollectionView Grid.Row="2"
+                    ItemsSource="{Binding RecentRecords}"
+                    SelectionMode="None">
+        <CollectionView.ItemTemplate>
+            <DataTemplate x:DataType="models:Record">
+                <Grid>
+                    <Frame HeightRequest="65">
+                        <Grid RowDefinitions="*, *"
+                              ColumnDefinitions="*, *">
+                            <Label Text="{Binding mapName}"
+                                   MaxLines="1"
+                                   Grid.Row="0"
+                                   Grid.Column="0"/>
+                            <Label Text="{Binding accountName}"
+                                   Grid.Row="0"
+                                   Grid.Column="1"/>
+                            <Label Text="{Binding position}"
+                                   Grid.Row="1"
+                                   Grid.Column="0"/>
+                            <Label Text="{Binding timestampIsoUtc}"
+                                   Grid.Row="1"
+                                   Grid.Column="1"/>
+                        </Grid>
+                    </Frame>
+                </Grid>
+            </DataTemplate>
+        </CollectionView.ItemTemplate>
+    </CollectionView>
 </ContentPage>

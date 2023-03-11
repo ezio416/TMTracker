@@ -1,5 +1,5 @@
 // c 2023-03-09
-// m 2023-03-10
+// m 2023-03-11
 
 namespace TMT.Models {
     public abstract class Map {
@@ -15,7 +15,7 @@ namespace TMT.Models {
         [JsonPropertyName("uid")] public abstract string mapUid { get; set; }
         [JsonPropertyName("medal")] public int personalMedal { get; set; }
         public float personalTime { get; set; }
-        public List<Records.Record> records { get; set; }
+        public List<Record> records { get; set; }
         public abstract float silverTime { get; set; }
         public Uri thumbnailUrl { get; set; }
         [JsonPropertyName("updateTimestamp")] public int updatedUnix { get; set; }

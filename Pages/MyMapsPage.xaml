@@ -34,7 +34,8 @@
             <Grid RowDefinitions="*, *"
                   Grid.Column="1"
                   RowSpacing="5">
-                <Button Text="view records"
+                <Button Command="{Binding ViewRecordsPageCommand}"
+                        Text="view records"
                         Grid.Row="0"/>
                 <Button Command="{Binding RefreshRecordsCommand}"
                         Text="refresh records"
