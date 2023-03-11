@@ -1,5 +1,5 @@
 // c 2023-01-12
-// m 2023-03-09
+// m 2023-03-10
 
 namespace TMT.Core {
     class Maps {
@@ -112,6 +112,10 @@ namespace TMT.Core {
             MyMap[] myMaps = JsonSerializer.Deserialize<MyMap[]>(maps);
 
             foreach (MyMap map in myMaps) {
+                if (map.uploadedUnix < 1_600_000_000) {
+                    map.badUploadTime = true;
+                    map.uploadedUnix = map.updatedUnix;
+                }
                 map.authorTime /= 1000;
                 map.bronzeTime /= 1000;
                 map.goldTime /= 1000;
@@ -120,6 +124,10 @@ namespace TMT.Core {
             }
 
             return myMaps;
+        }
+
+        public static MyMap[] SortMyMaps(MyMap[] maps) {
+            return (from entry in maps orderby entry.uploadedUnix descending select entry).ToArray();
         }
     }
 }
