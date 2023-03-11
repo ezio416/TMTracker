@@ -69,6 +69,7 @@ namespace TMT.Core {
                 }
 
                 Settings config = LoadJson(File.ReadAllText(configFile));
+                initialSettings = config;
                 accountId = config.accountId;
                 api = config.api;
                 myMaps = config.myMaps;
