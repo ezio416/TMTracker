@@ -1,8 +1,8 @@
 // c 2023-01-13
-// m 2023-03-08
+// m 2023-03-09
 
 namespace TMT.Core {
-    class Records {
+    public class Records {
         private record _Tops(JsonElement tops);
         private record _Top(JsonElement top);
         public class Record {
