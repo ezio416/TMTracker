@@ -3,7 +3,7 @@
 
 namespace TMT.Pages {
     public partial class RecentRecordsPage : ContentPage {
-        public RecentRecordsPage(RecentRecordsViewModel vm) {
+        public RecentRecordsPage(MyMapsViewModel vm) {
             InitializeComponent();
             BindingContext = vm;
         }

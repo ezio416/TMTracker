@@ -1,5 +1,5 @@
 ﻿// c 2023-02-28
-// m 2023-03-05
+// m 2023-03-11
 
 namespace TMT {
 	public partial class AppShell : Shell {
@@ -10,6 +10,7 @@ namespace TMT {
             Routing.RegisterRoute(nameof(MyMapsPage), typeof(MyMapsPage));
             Routing.RegisterRoute(nameof(MyRecordsPage), typeof(MyRecordsPage));
             Routing.RegisterRoute(nameof(QueryPage), typeof(QueryPage));
+            Routing.RegisterRoute(nameof(RecentRecordsPage), typeof(RecentRecordsPage));
             Routing.RegisterRoute(nameof(SettingsPage), typeof(SettingsPage));
         }
 	}

@@ -1,5 +1,5 @@
 // c 2023-01-12
-// m 2023-03-10
+// m 2023-03-11
 
 namespace TMT.Core {
     class Maps {
@@ -66,8 +66,8 @@ namespace TMT.Core {
                 Various.ApiWait();
                 using HttpResponseMessage response = await clients[0].GetAsync($"mapRecords/?accountIdList={Config.accountId}&mapIdList={group}");
                 string responseString = await response.Content.ReadAsStringAsync();
-                Records.Record[] records = JsonSerializer.Deserialize<Records.Record[]>(responseString);
-                foreach (Records.Record record in records) {
+                Record[] records = JsonSerializer.Deserialize<Record[]>(responseString);
+                foreach (Record record in records) {
                     mapsById[record.mapId].personalMedal = record.medal;
                     mapsById[record.mapId].personalTime = (float)JsonSerializer.Deserialize<_CampaignRecord>(record.recordScore.ToString()).time / 1000;
                 }

@@ -29,7 +29,6 @@ namespace TMT {
             builder.Services.AddSingleton<QueryViewModel>();
 
             builder.Services.AddSingleton<RecentRecordsPage>();
-            builder.Services.AddSingleton<RecentRecordsViewModel>();
 
             builder.Services.AddSingleton<SettingsPage>();
             builder.Services.AddSingleton<SettingsViewModel>();

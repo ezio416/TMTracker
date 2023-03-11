@@ -71,6 +71,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <MauiXaml Update="Pages\RecentRecordsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+  </ItemGroup>
+
+  <ItemGroup>
     <MauiXaml Update="Pages\QueryPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
