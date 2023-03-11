@@ -13,26 +13,55 @@
         <mct:StatusBarBehavior StatusBarColor="{StaticResource Gray700}"/>
     </ContentPage.Behaviors>
 
-    <Grid RowDefinitions="*, 9*">
-        <Button Command="{Binding BtnCommand}"
-                Text="{Binding Status}"
-                Grid.Row="0"/>
+    <Grid RowDefinitions="*, 4*, 20*">
+        <Grid ColumnDefinitions="*, 2*"
+              Grid.Row="0">
+            <Label Text="{Binding MapCountLabelText}"
+                   Grid.Column="0"
+                   HorizontalOptions="Center"/>
+            <Label Text="{Binding Status}"
+                   Grid.Column="1"
+                   HorizontalOptions="Center"
+                   MaxLines="1"/>
+        </Grid>
+        <Grid ColumnDefinitions="*, 2*"
+              Grid.Row="1"
+              Padding="5"
+              ColumnSpacing="5">
+            <Button Command="{Binding RefreshMapsCommand}"
+                    Text="refresh maps"
+                    Grid.Column="0"/>
+            <Grid RowDefinitions="*, *"
+                  Grid.Column="1"
+                  RowSpacing="5">
+                <Button Text="view records"
+                        Grid.Row="0"/>
+                <Button Command="{Binding RefreshRecordsCommand}"
+                        Text="refresh records"
+                        Grid.Row="1"/>
+            </Grid>
+            
+        </Grid>
 
-        <CollectionView Grid.Row="1"
+        <CollectionView Grid.Row="2"
                         ItemsSource="{Binding MyMaps}"
                         SelectionMode="None">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="models:MyMap">
-                    <Grid Padding="5">
-                        <Frame HeightRequest="75">
-                            <Grid Padding="0" ColumnDefinitions="75, *">
-                                <VerticalStackLayout VerticalOptions="Center"
-                                                     Grid.Column="1"
-                                                     Padding="5">
-                                    <Label Text="{Binding mapName}"/>
-                                    <Label Text="{Binding mapId}"/>
+                    <Grid>
+                        <Frame HeightRequest="65">
+                            <Grid ColumnDefinitions="50, *, 30, 30">
+                                <Image Source="map.png"
+                                       Grid.Column="0"/>
+                                <VerticalStackLayout Grid.Column="1">
+                                    <Label Text="{Binding mapName}"
+                                           MaxLines="1"/>
                                     <Label Text="{Binding uploadedIsoUtc}"/>
                                 </VerticalStackLayout>
+                                <Label Text="{Binding records.Count}"
+                                       Grid.Column="2"/>
+                                <Image Source="right.png"
+                                       Grid.Column="3"/>
                             </Grid>
                         </Frame>
                     </Grid>
