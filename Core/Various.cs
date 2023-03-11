@@ -1,5 +1,5 @@
 // c 2023-01-12
-// m 2023-03-08
+// m 2023-03-10
 
 namespace TMT.Core {
     class Various {
@@ -19,7 +19,14 @@ namespace TMT.Core {
         public static void Log(string msg = "", string category = "misc", string file = "tmt.log") {
             category = category.ToUpper();
             using StreamWriter sw = File.AppendText($"{Config.dirLogs}/{file}");
-            sw.WriteLine($"{DateTime.Now} {TimeZoneInfo.Local.ToString().Substring(4, 6)}  {category}  {msg}");
+            sw.WriteLine($"{Now(true)}  {category}  {msg}");
+        }
+
+        public static string Now(bool timezone = false) {
+            string now = DateTime.Now.ToString("s").Replace("T", " ");
+            if (timezone)
+                now += $" {TimeZoneInfo.Local.ToString().Substring(4, 6)}";
+            return now;
         }
 
         public static string UnixToIso(double unixTimestamp) {
