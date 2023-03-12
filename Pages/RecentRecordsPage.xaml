@@ -6,7 +6,7 @@
              x:Class="TMT.Pages.RecentRecordsPage"
              xmlns:viewmodels="clr-namespace:TMT.ViewModels"
              x:DataType="viewmodels:MyMapsViewModel"
-             Padding="5"
+             Padding="0"
              BackgroundColor="{StaticResource Gray700}">
 
     <ContentPage.Behaviors>
@@ -19,7 +19,8 @@
         <CollectionView.ItemTemplate>
             <DataTemplate x:DataType="models:Record">
                 <Grid>
-                    <Frame HeightRequest="65">
+                    <Frame HeightRequest="50"
+                           CornerRadius="0">
                         <Grid RowDefinitions="*, *"
                               ColumnDefinitions="*, *">
                             <Label Text="{Binding mapName}"

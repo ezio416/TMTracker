@@ -11,6 +11,12 @@ namespace TMT.ViewModels {
         [ObservableProperty]
         string mapCountLabelText = "map count: ";
 
+        [ObservableProperty]
+        bool refreshRecordsEnabled = false;
+
+        [ObservableProperty]
+        bool viewRecordsEnabled = false;
+
         int i = 0;
         readonly HashSet<string> accountIds = new();
         Dictionary<string, Accounts.Account> accounts;
@@ -27,15 +33,13 @@ namespace TMT.ViewModels {
             Storage.myMaps = Maps.SortMyMaps(await Maps.GetMyMaps());
             MapCountLabelText = $"map count: {Storage.myMaps.Length}";
 
+            MyMaps.Clear();
             foreach (MyMap map in Storage.myMaps)
                 MyMaps.Add(map);
 
-            Status = $"updated: {Various.Now()}";
-        }
+            RefreshRecordsEnabled = true;
 
-        [RelayCommand]
-        async Task ViewRecordsPage() {
-            await Shell.Current.GoToAsync(nameof(RecentRecordsPage));
+            Status = $"updated: {Various.Now()}";
         }
 
         [RelayCommand]
@@ -94,7 +98,14 @@ namespace TMT.ViewModels {
             foreach (Record record in Storage.myMapsRecentRecords)
                 RecentRecords.Add(record);
 
+            ViewRecordsEnabled = true;
+
             Status = $"updated: {Various.Now()}";
+        }
+
+        [RelayCommand]
+        async Task ViewRecordsPage() {
+            await Shell.Current.GoToAsync(nameof(RecentRecordsPage));
         }
     }
 }
