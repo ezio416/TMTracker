@@ -1,11 +1,10 @@
 // c 2023-01-13
-// m 2023-03-11
+// m 2023-03-25
 
 namespace TMT.Core {
     public class Records {
         private record _Tops(JsonElement tops);
         private record _Top(JsonElement top);
-
 
         public static async Task<Dictionary<string, Record>> GetMoreRecordInfo(string[][] accountGroups, string[] mapIds, Dictionary<string, Record> records) {
             foreach (string[] group in accountGroups) {
@@ -29,7 +28,6 @@ namespace TMT.Core {
 
             string accountIdsString = string.Join("%2C", accountIds);
             string mapIdsString = string.Join("%2C", mapIds);
-            Various.ApiWait();
             using HttpResponseMessage response = await clients[0].GetAsync($"mapRecords/?accountIdList={accountIdsString}&mapIdList={mapIdsString}");
             string responseString = await response.Content.ReadAsStringAsync();
             List<Record> records = JsonSerializer.Deserialize<List<Record>>(responseString);
@@ -50,7 +48,6 @@ namespace TMT.Core {
 
             string url = $"api/token/leaderboard/group/Personal_Best/map/{mapUid}/top";
             url += $"?audience=NadeoLiveServices&length={count}&onlyWorld=True";
-            Various.ApiWait();
             using HttpResponseMessage response = await clients[1].GetAsync(url);
             string responseString = await response.Content.ReadAsStringAsync();
             JsonElement tops = JsonSerializer.Deserialize<_Tops>(responseString).tops[0];

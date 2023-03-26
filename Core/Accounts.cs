@@ -1,36 +1,8 @@
 // c 2023-01-13
-// m 2023-03-11
+// m 2023-03-26
 
 namespace TMT.Core {
     class Accounts {
-        public class Account {
-            public string accountId { get; set; }
-            [JsonPropertyName("displayName")] public string accountName { get; set; }
-            public ClubTag clubTag { get; set; }
-            public Record[] records { get; set; }
-            [JsonPropertyName("timestamp")] public string timestampIsoUtc { get; set; }
-            public int timestampUnix { get; set; }
-        }
-        public class ClubTag {
-            public string accountId { get; set; }
-            public ClubTagLetter[] clubTagLetters { get; set; }
-            [JsonPropertyName("clubTag")] public string clubTagRaw { get; set; }
-            public string clubTagText { get; set; }
-            [JsonPropertyName("timestamp")] public string timestampIsoUtc { get; set; }
-            public int timestampUnix { get; set; }
-        }
-        public class ClubTagLetter {
-            public string color3 { get; set; }
-            public string color6 { get; set; }
-            public bool isBold { get; set; }
-            public bool isItalic { get; set; }
-            public bool isNarrow { get; set; }
-            public bool isShadow { get; set; }
-            public bool isWide { get; set; }
-            public char val { get; set; }
-        }
-
-
         // using L1
         public static async Task<Dictionary<string, Account>> GetAccounts(string[] accountIds) {
             const int accountLimit = 50;
@@ -49,7 +21,6 @@ namespace TMT.Core {
             }
 
             foreach (string group in groups) {
-                Various.ApiWait();
                 using HttpResponseMessage response = await clients[0].GetAsync($"accounts/displayNames/?accountIdList={group}");
                 string responseString = await response.Content.ReadAsStringAsync();
                 Account[] responseAccounts = JsonSerializer.Deserialize<Account[]>(responseString);
@@ -59,15 +30,14 @@ namespace TMT.Core {
                     accounts.Add(account.accountId, account);
                 }
 
-                Various.ApiWait();
                 using HttpResponseMessage responseClub = await clients[0].GetAsync($"accounts/clubTags/?accountIdList={group}");
                 string responseClubString = await responseClub.Content.ReadAsStringAsync();
                 ClubTag[] clubTags = JsonSerializer.Deserialize<ClubTag[]>(responseClubString);
                 foreach (ClubTag clubTag in clubTags) {
                     List<char> letters = new();
                     clubTag.clubTagLetters = ParseClubTag(clubTag.clubTagRaw);
-                    foreach (ClubTagLetter clubTagLetter in clubTag.clubTagLetters)
-                        letters.Add(clubTagLetter.val);
+                    foreach (StyledChar clubTagLetter in clubTag.clubTagLetters)
+                        letters.Add(clubTagLetter.value);
                     clubTag.clubTagText = new string(letters.ToArray());
                     clubTag.timestampIsoUtc = clubTag.timestampIsoUtc.Replace("+00:00", "Z");
                     clubTag.timestampUnix = Various.IsoToUnix(clubTag.timestampIsoUtc);
@@ -79,7 +49,7 @@ namespace TMT.Core {
             return accounts;
         }
 
-        public static ClubTagLetter[] ParseClubTag(string clubTagRaw) {
+        public static StyledChar[] ParseClubTag(string clubTagRaw) {
             bool isBold = false;
             List<char> code = new();
             string color3 = "FFF";
@@ -89,7 +59,7 @@ namespace TMT.Core {
             bool isItalic = false;
             bool isNarrow = false;
             bool isShadow = false;
-            List<ClubTagLetter> letters = new();
+            List<StyledChar> letters = new();
             bool isWide = false;
 
             foreach (char ch in clubTagRaw) {
@@ -165,14 +135,14 @@ namespace TMT.Core {
                     code.Clear();
                 }
                 if (isVal)
-                    letters.Add(new ClubTagLetter {
-                        color3 = color3,
-                        isBold = isBold,
-                        isItalic = isItalic,
-                        isNarrow = isNarrow,
-                        isShadow = isShadow,
-                        isWide = isWide,
-                        val = ch
+                    letters.Add(new StyledChar {
+                        color_3 = color3,
+                        bold = isBold,
+                        italic = isItalic,
+                        narrow = isNarrow,
+                        shadow = isShadow,
+                        value = ch,
+                        wide = isWide
                     });
             }
 

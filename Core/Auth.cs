@@ -1,11 +1,10 @@
 // c 2023-01-10
-// m 2023-03-10
+// m 2023-03-25
 
 namespace TMT.Core {
     class Auth {
         private record class _Ticket(string ticket);
         private record class _Token(string accessToken);
-
 
         static HttpClient[] _clients;
         public static async Task<HttpClient[]> GetClients() {
@@ -31,7 +30,6 @@ namespace TMT.Core {
 
             // using L0 to get L1
             client1.DefaultRequestHeaders.Add("Authorization", token0);
-            Various.ApiWait();
             using HttpResponseMessage response1 = await client1.PostAsync(
                 "v2/authentication/token/ubiservices",
                 new StringContent("", Encoding.UTF8, "application/json")
@@ -42,7 +40,6 @@ namespace TMT.Core {
             // using L1 to get L2
             client1.DefaultRequestHeaders.Clear();
             client1.DefaultRequestHeaders.Add("Authorization", token1);
-            Various.ApiWait();
             using HttpResponseMessage response2 = await client1.PostAsync(
                 "v2/authentication/token/nadeoservices",
                 new FormUrlEncodedContent(new[] { new KeyValuePair<string, string>("audience", "NadeoLiveServices") })

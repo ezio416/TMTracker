@@ -1,5 +1,5 @@
 // c 2023-01-15
-// m 2023-03-08
+// m 2023-03-25
 
 namespace TMT.Core {
     class Config {
@@ -12,14 +12,12 @@ namespace TMT.Core {
             public string agent { get; set; }
             public string password { get; set; }
             public string username { get; set; }
-            public int waitMilliseconds { get; set; }
         }
         public class SettingsMyMaps {
             public string[] ignoreMapIds { get; set; }
             public bool ignoreRegionContinent { get; set; }
             public bool ignoreRegionWorld { get; set; }
         }
-
 
         public static string accountId;
         public static SettingsAPI api;
@@ -42,7 +40,6 @@ namespace TMT.Core {
         public static string dirLogs = $"{dirApp}/logs";
         public static string os = "windows";
 #endif
-
 
         static bool _init;
         public static async void Init() {

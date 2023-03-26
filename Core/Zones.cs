@@ -1,15 +1,8 @@
 // c 2023-01-13
-// m 2023-03-06
+// m 2023-03-26
 
 namespace TMT.Core {
     class Zones {
-        public class Zone {
-            public string name { get; set; }
-            public string parentId { get; set; }
-            public string zoneId { get; set; }
-        }
-
-
         // using L1
         static readonly Dictionary<string, string> _zones = new();
         public static async Task<Dictionary<string, string>> Get() {
@@ -21,7 +14,6 @@ namespace TMT.Core {
 
             HttpClient[] clients = await Auth.GetClients();
 
-            Various.ApiWait();
             using HttpResponseMessage response = await clients[0].GetAsync("zones");
             string responseString = await response.Content.ReadAsStringAsync();
             Zone[] responseZones = JsonSerializer.Deserialize<Zone[]>(responseString);

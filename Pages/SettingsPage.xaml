@@ -48,14 +48,6 @@
 
         <Frame>
             <VerticalStackLayout>
-                <Label Text="{Binding WaitTimeTitle}"/>
-                <Button Command="{Binding WaitTimeClickedCommand}"
-                        Text="{Binding WaitTime}"/>
-            </VerticalStackLayout>
-        </Frame>
-
-        <Frame>
-            <VerticalStackLayout>
                 <Label Text="Map IDs to Ignore"/>
                 <CollectionView ItemsSource="{Binding IgnoreMapIds}">
                     <CollectionView.ItemTemplate>

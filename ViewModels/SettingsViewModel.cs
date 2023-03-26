@@ -1,5 +1,5 @@
 ﻿// c 2023-03-05
-// m 2023-03-08
+// m 2023-03-26
 
 namespace TMT.ViewModels {
     public partial class SettingsViewModel : ObservableObject {
@@ -34,14 +34,6 @@ namespace TMT.ViewModels {
         [ObservableProperty]
         string password = Config.api.password;
         string passwordInitial = Config.api.password;
-
-        const string waitTimeTitleInitial = "API Wait Time (ms)";
-        const string waitTimeTitleChanged = waitTimeTitleInitial + "*";
-        [ObservableProperty]
-        string waitTimeTitle = waitTimeTitleInitial;
-        [ObservableProperty]
-        string waitTime = Config.api.waitMilliseconds.ToString();
-        string waitTimeInitial = Config.api.waitMilliseconds.ToString();
 
         [ObservableProperty]
         string[] ignoreMapIds = Config.myMaps.ignoreMapIds;
@@ -135,22 +127,6 @@ namespace TMT.ViewModels {
             }
         }
 
-        [RelayCommand]
-        async Task WaitTimeClicked() {
-            string userWaitTime = await Application.Current.MainPage.DisplayPromptAsync(
-                waitTimeTitleInitial, "New wait time:", initialValue: WaitTime.ToString(), keyboard: Keyboard.Numeric, cancel: "CANCEL"
-            );
-            if (userWaitTime != null) {
-                WaitTime = userWaitTime;
-                Config.api.waitMilliseconds = Int32.Parse(WaitTime);
-                if (userWaitTime == waitTimeInitial) WaitTimeTitle = waitTimeTitleInitial;
-                else {
-                    WaitTimeTitle = waitTimeTitleChanged;
-                    SaveEnabled = true;
-                }
-            }
-        }
-
         partial void OnIgnoreContinentChanged(bool value) {
             if (IgnoreContinent != ignoreContinentInitial) {
                 Config.myMaps.ignoreRegionContinent = IgnoreContinent;
@@ -196,9 +172,6 @@ namespace TMT.ViewModels {
             Username = usernameInitial;
             UsernameTitle = usernameTitleInitial;
 
-            WaitTime = waitTimeInitial;
-            WaitTimeTitle = waitTimeTitleInitial;
-
             IgnoreContinent = ignoreContinentInitial;
             IgnoreWorld = ignoreWorldInitial;
 
@@ -219,7 +192,6 @@ namespace TMT.ViewModels {
             agentInitial = Agent;
             passwordInitial = Password;
             usernameInitial = Username;
-            waitTimeInitial = WaitTime;
             ignoreContinentInitial = IgnoreContinent;
             ignoreWorldInitial = IgnoreWorld;
 
@@ -227,7 +199,6 @@ namespace TMT.ViewModels {
             AgentTitle = agentTitleInitial;
             PasswordTitle = passwordTitleInitial;
             UsernameTitle = usernameTitleInitial;
-            WaitTimeTitle = waitTimeTitleInitial;
             IgnoreRegionsTitle = ignoreRegionsTitleInitial;
             IgnoreContinentTitle = ignoreContinentTitleInitial;
             IgnoreWorldTitle = ignoreWorldTitleInitial;

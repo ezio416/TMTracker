@@ -1,5 +1,5 @@
 ﻿// c 2023-03-04
-// m 2023-03-11
+// m 2023-03-26
 
 using System.Collections.ObjectModel;
 
@@ -19,9 +19,9 @@ namespace TMT.ViewModels {
 
         int i = 0;
         readonly HashSet<string> accountIds = new();
-        Dictionary<string, Accounts.Account> accounts;
+        Dictionary<string, Account> accounts;
         readonly HashSet<string> mapIds = new();
-        Accounts.Account myAccount;
+        Account myAccount;
         Dictionary<string, Record> records = new();
 
         public ObservableCollection<MyMap> MyMaps { get; set; } = new();
@@ -71,7 +71,7 @@ namespace TMT.ViewModels {
             List<string> singleRecordAccountIds = new();
             HashSet<string> singleRecordMapIds = new();
             List<string> multiRecordAccountIds = new();
-            foreach (KeyValuePair<string, Accounts.Account> account in accounts) {
+            foreach (KeyValuePair<string, Account> account in accounts) {
                 List<Record> accountRecords = new();
                 foreach (MyMap map in Storage.myMaps) {
                     string key = $"{map.mapId},{account.Value.accountId}";

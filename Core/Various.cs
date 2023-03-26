@@ -1,10 +1,8 @@
 // c 2023-01-12
-// m 2023-03-10
+// m 2023-03-25
 
 namespace TMT.Core {
     class Various {
-        public static void ApiWait() { Thread.Sleep(Config.api.waitMilliseconds); }
-
         public static bool IsCharHex(char ch) {
             if ('0' <= ch && ch <= '9' || 'A' <= ch && ch <= 'Z' || 'a' <= ch && ch <= 'z')
                 return true;

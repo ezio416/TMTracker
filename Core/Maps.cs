@@ -1,5 +1,5 @@
 // c 2023-01-12
-// m 2023-03-11
+// m 2023-03-25
 
 namespace TMT.Core {
     class Maps {
@@ -7,7 +7,6 @@ namespace TMT.Core {
         record _CampaignList(JsonElement campaignList);
         record _CampaignRecord(int time);
         record _MapList(JsonElement mapList);
-
 
         // using L1+2
         public static async Task<CampaignMap[]> GetCampaignMaps() {
@@ -36,7 +35,6 @@ namespace TMT.Core {
                 mapsByUid.Add(uid, new CampaignMap());
 
             foreach (string group in uidGroups) {
-                Various.ApiWait();
                 using HttpResponseMessage response = await clients[0].GetAsync($"maps/?mapUidList={group}");
                 string responseString = await response.Content.ReadAsStringAsync();
                 CampaignMap[] maps = JsonSerializer.Deserialize<CampaignMap[]>(responseString);
@@ -63,7 +61,6 @@ namespace TMT.Core {
             }
 
             foreach (string group in idGroups) {
-                Various.ApiWait();
                 using HttpResponseMessage response = await clients[0].GetAsync($"mapRecords/?accountIdList={Config.accountId}&mapIdList={group}");
                 string responseString = await response.Content.ReadAsStringAsync();
                 Record[] records = JsonSerializer.Deserialize<Record[]>(responseString);
@@ -84,17 +81,15 @@ namespace TMT.Core {
         public static async Task<string[]> GetCampaignUids() {
             HttpClient[] clients = await Auth.GetClients();
 
-            Various.ApiWait();
             using HttpResponseMessage response = await clients[1].GetAsync("api/token/campaign/official?length=1000&offset=0");
             string responseString = await response.Content.ReadAsStringAsync();
-            JsonElement maps = JsonSerializer.Deserialize<_CampaignList>(responseString).campaignList;
-            _Campaign[] campaigns = JsonSerializer.Deserialize<_Campaign[]>(maps);
+            _Campaign[] campaigns = JsonSerializer.Deserialize<_Campaign[]>(JsonSerializer.Deserialize<_CampaignList>(responseString).campaignList);
 
             foreach (_Campaign campaign in campaigns)
                 campaign.maps = JsonSerializer.Deserialize<CampaignMap[]>(campaign.playlist);
 
             List<string> uids = new();
-            for (int i = campaigns.Length - 1; i >= 0; i--)
+            for (int i = campaigns.Length; i > 0; i--)
                 foreach (CampaignMap map in campaigns[i].maps)
                     uids.Add(map.mapUid);
 
@@ -105,11 +100,9 @@ namespace TMT.Core {
         public static async Task<MyMap[]> GetMyMaps(int count = 1000) {
             HttpClient[] clients = await Auth.GetClients();
 
-            Various.ApiWait();
             using HttpResponseMessage response = await clients[1].GetAsync($"api/token/map?length={count}");
             string responseString = await response.Content.ReadAsStringAsync();
-            JsonElement maps = JsonSerializer.Deserialize<_MapList>(responseString).mapList;
-            MyMap[] myMaps = JsonSerializer.Deserialize<MyMap[]>(maps);
+            MyMap[] myMaps = JsonSerializer.Deserialize<MyMap[]>(JsonSerializer.Deserialize<_MapList>(responseString).mapList);
 
             foreach (MyMap map in myMaps) {
                 if (map.uploadedUnix < 1_600_000_000) {
