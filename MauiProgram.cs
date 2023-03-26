@@ -1,5 +1,5 @@
 ﻿// c 2023-02-28
-// m 2023-03-11
+// m 2023-03-26
 
 using CommunityToolkit.Maui;
 
@@ -7,6 +7,7 @@ namespace TMT {
 	public static class MauiProgram {
 		public static MauiApp CreateMauiApp() {
             Config.Init();
+
 			var builder = MauiApp.CreateBuilder()
 				.UseMauiApp<App>()
                 .UseMauiCommunityToolkit()
