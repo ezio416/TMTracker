@@ -26,8 +26,8 @@ class Accounts {
             accountIds = accountIds.Skip(accountLimit).ToArray();
         }
 
-            foreach (string group in groups) {
-                using HttpResponseMessage response = await clients[0].GetAsync($"accounts/displayNames/?accountIdList={group}");
+        foreach (string group in groups) {
+            using HttpResponseMessage response = await clients[0].GetAsync($"accounts/displayNames/?accountIdList={group}");
             string responseString = await response.Content.ReadAsStringAsync();
             Account[] responseAccounts = JsonSerializer.Deserialize<Account[]>(responseString);
             foreach (Account account in responseAccounts) {
@@ -36,13 +36,13 @@ class Accounts {
                 accounts.Add(account.accountId, account);
             }
 
-                using HttpResponseMessage responseClub = await clients[0].GetAsync($"accounts/clubTags/?accountIdList={group}");
+            using HttpResponseMessage responseClub = await clients[0].GetAsync($"accounts/clubTags/?accountIdList={group}");
             string responseClubString = await responseClub.Content.ReadAsStringAsync();
             _ClubTag[] tags = JsonSerializer.Deserialize<_ClubTag[]>(responseClubString);
             foreach (_ClubTag tag in tags)
                 accounts[tag.accountId].clubTag = new StyledString(tag.clubTag);
         }
-             
+        
         return accounts;
     }
 
