@@ -61,7 +61,7 @@
                                                         CacheValidity="999:00:00:00"/>
                                     </Image.Source>
                                 </Image>
-                                <Label Text="{Binding mapName}"
+                                <Label Text="{Binding mapName.text}"
                                        MaxLines="1"
                                        Grid.Column="1"/>
                                     <Label Text="{Binding records.Count}"

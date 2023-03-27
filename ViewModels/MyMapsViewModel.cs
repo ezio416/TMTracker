@@ -30,7 +30,7 @@ namespace TMT.ViewModels {
         [RelayCommand]
         async Task RefreshMaps() {
             Status = $"getting my maps...";
-            Storage.myMaps = Maps.SortMyMaps(await Maps.GetMyMaps());
+            Storage.myMaps = await Maps.GetMyMaps();
             MapCountLabelText = $"map count: {Storage.myMaps.Length}";
 
             MyMaps.Clear();
@@ -45,13 +45,13 @@ namespace TMT.ViewModels {
         [RelayCommand]
         async Task RefreshRecords() {
             foreach (MyMap map in Storage.myMaps) {
-                Status = $"({Storage.myMaps.Length - i++}) getting records: {map.mapName}";
+                Status = $"({Storage.myMaps.Length - i++}) getting records: {map.mapName.text}";
                 mapIds.Add(map.mapId);
                 map.records = await Records.GetSingleMapRecords(map.mapUid);
 
                 foreach (Record record in map.records) {
                     record.mapId = map.mapId;
-                    record.mapName = map.mapName;
+                    record.mapName = map.mapName.text;
                     accountIds.Add(record.accountId);
                     records.Add($"{record.mapId},{record.accountId}", record);
                 }

@@ -12,8 +12,9 @@ namespace TMT.Models {
         public abstract Uri    downloadUrl    { get; set; }
         public abstract float  goldTime       { get; set; }
         public string          mapId          { get; set; }
+        public StyledString    mapName        { get; set; }
         [JsonPropertyName("name")]
-        public string          mapName        { get; set; }
+        public string          mapNameRaw     { get; set; }
         [JsonPropertyName("uid")]
         public abstract string mapUid         { get; set; }
         [JsonPropertyName("medal")]

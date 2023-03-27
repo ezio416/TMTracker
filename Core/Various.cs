@@ -1,10 +1,10 @@
 // c 2023-01-12
-// m 2023-03-25
+// m 2023-03-26
 
 namespace TMT.Core {
     class Various {
         public static bool IsCharHex(char ch) {
-            if ('0' <= ch && ch <= '9' || 'A' <= ch && ch <= 'Z' || 'a' <= ch && ch <= 'z')
+            if ('0' <= ch && ch <= '9' || 'A' <= ch && ch <= 'F' || 'a' <= ch && ch <= 'f')
                 return true;
             return false;
         }

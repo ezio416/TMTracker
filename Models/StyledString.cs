@@ -27,24 +27,24 @@ namespace TMT.Models {
                 bool isCharHex = Various.IsCharHex(ch);
                 char CH = char.ToUpper(ch);
                 isCharVal = true;
-                if (ch == '$') {
-                    flag = true;
-                    continue;
-                }
                 if (colorCountdown > 0) {
                     if (isCharHex) {
-                        code.Add(CH);
                         colorCountdown -= 1;
-                        if (colorCountdown > 0)
-                            flag = false;
-                        continue;
-                    }
-                    else {
-                        for (int i = 0; i < 3 - code.Count; i++)
+                        flag = true;
+                    } else {
+                        for (int i = 0; i <= 3 - code.Count; i++)
                             code.Add('0');
                         colorCountdown = 0;
                         flag = false;
                     }
+                }
+                if (code.Count == 3) {
+                    color_3 = new string(code.ToArray());
+                    code.Clear();
+                }
+                if (ch == '$') {
+                    flag = true;
+                    continue;
                 }
                 if (flag) {
                     flag = false;
@@ -85,16 +85,11 @@ namespace TMT.Models {
                         default:
                             if (isCharHex) {
                                 if (code.Count == 0)
-                                    colorCountdown += 2;
+                                    colorCountdown = 2;
                                 code.Add(CH);
-                                flag = true;
                             }
                             break;
                     }
-                }
-                if (code.Count == 3) {
-                    color_3 = new string(code.ToArray());
-                    code.Clear();
                 }
                 if (isCharVal) {
                     chars.Add(new StyledChar {

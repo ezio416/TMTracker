@@ -1,5 +1,5 @@
 // c 2023-01-12
-// m 2023-03-25
+// m 2023-03-26
 
 namespace TMT.Core {
     class Maps {
@@ -112,15 +112,12 @@ namespace TMT.Core {
                 map.authorTime /= 1000;
                 map.bronzeTime /= 1000;
                 map.goldTime /= 1000;
+                map.mapName = new StyledString(map.mapNameRaw);
                 map.silverTime /= 1000;
                 map.uploadedIsoUtc = Various.UnixToIso(map.uploadedUnix);
             }
 
-            return myMaps;
-        }
-
-        public static MyMap[] SortMyMaps(MyMap[] maps) {
-            return (from entry in maps orderby entry.uploadedUnix descending select entry).ToArray();
+            return (from entry in myMaps orderby entry.uploadedUnix descending select entry).ToArray();
         }
     }
 }
