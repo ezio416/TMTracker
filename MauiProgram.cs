@@ -21,6 +21,9 @@ public static class MauiProgram {
 		builder.Services.AddSingleton<HomePage>();
         builder.Services.AddSingleton<HomeViewModel>();
 
+        builder.Services.AddTransient<MapPage>();
+        builder.Services.AddTransient<MapViewModel>();
+
         builder.Services.AddSingleton<MyMapsPage>();
         builder.Services.AddSingleton<MyMapsViewModel>();
 

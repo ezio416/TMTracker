@@ -1,10 +1,10 @@
-﻿// c 2023-02-28
+// c 2023-03-27
 // m 2023-03-27
 
 namespace TMT.Pages;
 
-public partial class HomePage : ContentPage {
-    public HomePage(HomeViewModel vm) {
+public partial class MapPage : ContentPage {
+    public MapPage(MapViewModel vm) {
         InitializeComponent();
         BindingContext = vm;
     }
