@@ -1,210 +1,210 @@
 ﻿// c 2023-03-05
-// m 2023-03-26
+// m 2023-03-27
 
-namespace TMT.ViewModels {
-    public partial class SettingsViewModel : ObservableObject {
-        const string accountIdTitleInitial = "Account ID";
-        const string accountIdTitleChanged = accountIdTitleInitial + "*";
-        [ObservableProperty]
-        string accountIdTitle = accountIdTitleInitial;
-        [ObservableProperty]
-        string accountId = Config.accountId;
-        string accountIdInitial = Config.accountId;
+namespace TMT.ViewModels;
 
-        const string agentTitleInitial = "API Agent";
-        const string agentTitleChanged = agentTitleInitial + "*";
-        [ObservableProperty]
-        string agentTitle = agentTitleInitial;
-        [ObservableProperty]
-        string agent = Config.api.agent;
-        string agentInitial = Config.api.agent;
+public partial class SettingsViewModel : ObservableObject {
+    const string accountIdTitleInitial = "Account ID";
+    const string accountIdTitleChanged = accountIdTitleInitial + "*";
+    [ObservableProperty]
+    string accountIdTitle = accountIdTitleInitial;
+    [ObservableProperty]
+    string accountId = Config.accountId;
+    string accountIdInitial = Config.accountId;
 
-        const string usernameTitleInitial = "API Username";
-        const string usernameTitleChanged = usernameTitleInitial + "*";
-        [ObservableProperty]
-        string usernameTitle = usernameTitleInitial;
-        [ObservableProperty]
-        string username = Config.api.username;
-        string usernameInitial = Config.api.username;
+    const string agentTitleInitial = "API Agent";
+    const string agentTitleChanged = agentTitleInitial + "*";
+    [ObservableProperty]
+    string agentTitle = agentTitleInitial;
+    [ObservableProperty]
+    string agent = Config.api.agent;
+    string agentInitial = Config.api.agent;
 
-        const string passwordTitleInitial = "API Password";
-        const string passwordTitleChanged = passwordTitleInitial + "*";
-        [ObservableProperty]
-        string passwordTitle = passwordTitleInitial;
-        [ObservableProperty]
-        string password = Config.api.password;
-        string passwordInitial = Config.api.password;
+    const string usernameTitleInitial = "API Username";
+    const string usernameTitleChanged = usernameTitleInitial + "*";
+    [ObservableProperty]
+    string usernameTitle = usernameTitleInitial;
+    [ObservableProperty]
+    string username = Config.api.username;
+    string usernameInitial = Config.api.username;
 
-        [ObservableProperty]
-        string[] ignoreMapIds = Config.myMaps.ignoreMapIds;
-        //string[] ignoreMapIdsInitial = Config.myMaps.ignoreMapIds;
+    const string passwordTitleInitial = "API Password";
+    const string passwordTitleChanged = passwordTitleInitial + "*";
+    [ObservableProperty]
+    string passwordTitle = passwordTitleInitial;
+    [ObservableProperty]
+    string password = Config.api.password;
+    string passwordInitial = Config.api.password;
 
-        const string ignoreRegionsTitleInitial = "Ignore Regions";
-        const string ignoreRegionsTitleChanged = ignoreRegionsTitleInitial + "*";
-        [ObservableProperty]
-        string ignoreRegionsTitle = ignoreRegionsTitleInitial;
+    [ObservableProperty]
+    string[] ignoreMapIds = Config.myMaps.ignoreMapIds;
+    //string[] ignoreMapIdsInitial = Config.myMaps.ignoreMapIds;
 
-        const string ignoreContinentTitleInitial = "Continent";
-        const string ignoreContinentTitleChanged = ignoreContinentTitleInitial + "*";
-        [ObservableProperty]
-        string ignoreContinentTitle = ignoreContinentTitleInitial;
-        [ObservableProperty]
-        bool ignoreContinent = Config.myMaps.ignoreRegionContinent;
-        bool ignoreContinentInitial = Config.myMaps.ignoreRegionContinent;
+    const string ignoreRegionsTitleInitial = "Ignore Regions";
+    const string ignoreRegionsTitleChanged = ignoreRegionsTitleInitial + "*";
+    [ObservableProperty]
+    string ignoreRegionsTitle = ignoreRegionsTitleInitial;
 
-        const string ignoreWorldTitleInitial = "     World";
-        const string ignoreWorldTitleChanged = ignoreWorldTitleInitial + "*";
-        [ObservableProperty]
-        string ignoreWorldTitle = ignoreWorldTitleInitial;
-        [ObservableProperty]
-        bool ignoreWorld = Config.myMaps.ignoreRegionWorld;
-        bool ignoreWorldInitial = Config.myMaps.ignoreRegionWorld;
+    const string ignoreContinentTitleInitial = "Continent";
+    const string ignoreContinentTitleChanged = ignoreContinentTitleInitial + "*";
+    [ObservableProperty]
+    string ignoreContinentTitle = ignoreContinentTitleInitial;
+    [ObservableProperty]
+    bool ignoreContinent = Config.myMaps.ignoreRegionContinent;
+    bool ignoreContinentInitial = Config.myMaps.ignoreRegionContinent;
 
-        [ObservableProperty]
-        bool saveEnabled;
+    const string ignoreWorldTitleInitial = "     World";
+    const string ignoreWorldTitleChanged = ignoreWorldTitleInitial + "*";
+    [ObservableProperty]
+    string ignoreWorldTitle = ignoreWorldTitleInitial;
+    [ObservableProperty]
+    bool ignoreWorld = Config.myMaps.ignoreRegionWorld;
+    bool ignoreWorldInitial = Config.myMaps.ignoreRegionWorld;
 
-        [RelayCommand]
-        async Task AccountIdClicked() {
-            string userAccountId = await Application.Current.MainPage.DisplayPromptAsync(
-                accountIdTitleInitial, "New account ID (UUID):", initialValue: AccountId, maxLength: 36, cancel: "CANCEL"
-            );
-            if (userAccountId != null) {
-                AccountId = userAccountId;
-                Config.accountId = AccountId;
-                if (userAccountId == accountIdInitial) AccountIdTitle = accountIdTitleInitial;
-                else {
-                    AccountIdTitle = accountIdTitleChanged;
-                    SaveEnabled = true;
-                }
-            }
-        }
+    [ObservableProperty]
+    bool saveEnabled;
 
-        [RelayCommand]
-        async Task AgentClicked() {
-            string userAgent = await Application.Current.MainPage.DisplayPromptAsync(
-                agentTitleInitial, "New agent:", initialValue: Agent, cancel: "CANCEL"
-            );
-            if (userAgent != null) {
-                Agent = userAgent;
-                Config.api.agent = Agent;
-                if (userAgent == agentInitial) AgentTitle = agentTitleInitial;
-                else {
-                    AgentTitle = agentTitleChanged;
-                    SaveEnabled = true;
-                }
-            }
-        }
-
-        [RelayCommand]
-        async Task UsernameClicked() {
-            string userUsername = await Application.Current.MainPage.DisplayPromptAsync(
-                usernameTitleInitial, "New Ubisoft username (email):", initialValue: Username, cancel: "CANCEL"
-            );
-            if (userUsername != null) {
-                Username = userUsername;
-                Config.api.username = Username;
-                if (userUsername == usernameInitial) UsernameTitle = usernameTitleInitial;
-                else {
-                    UsernameTitle = usernameTitleChanged;
-                    SaveEnabled = true;
-                }
-            }
-        }
-
-        [RelayCommand]
-        async Task PasswordClicked() {
-            string userPassword = await Application.Current.MainPage.DisplayPromptAsync(
-                passwordTitleInitial, "New Ubisoft password:", initialValue: Password, cancel: "CANCEL"
-            );
-            if (userPassword != null) {
-                Password = userPassword;
-                Config.api.password = Password;
-                if (userPassword == passwordInitial) PasswordTitle = passwordTitleInitial;
-                else {
-                    PasswordTitle = passwordTitleChanged;
-                    SaveEnabled = true;
-                }
-            }
-        }
-
-        partial void OnIgnoreContinentChanged(bool value) {
-            if (IgnoreContinent != ignoreContinentInitial) {
-                Config.myMaps.ignoreRegionContinent = IgnoreContinent;
-                IgnoreContinentTitle = ignoreContinentTitleChanged;
+    [RelayCommand]
+    async Task AccountIdClicked() {
+        string userAccountId = await Application.Current.MainPage.DisplayPromptAsync(
+            accountIdTitleInitial, "New account ID (UUID):", initialValue: AccountId, maxLength: 36, cancel: "CANCEL"
+        );
+        if (userAccountId != null) {
+            AccountId = userAccountId;
+            Config.accountId = AccountId;
+            if (userAccountId == accountIdInitial) AccountIdTitle = accountIdTitleInitial;
+            else {
+                AccountIdTitle = accountIdTitleChanged;
                 SaveEnabled = true;
             }
-            else IgnoreContinentTitle = ignoreContinentTitleInitial;
-            CheckRegionsVsInitial();
         }
+    }
 
-        partial void OnIgnoreWorldChanged(bool value) {
-            if (IgnoreWorld != ignoreWorldInitial) {
-                Config.myMaps.ignoreRegionWorld = IgnoreWorld;
-                IgnoreWorldTitle = ignoreWorldTitleChanged;
+    [RelayCommand]
+    async Task AgentClicked() {
+        string userAgent = await Application.Current.MainPage.DisplayPromptAsync(
+            agentTitleInitial, "New agent:", initialValue: Agent, cancel: "CANCEL"
+        );
+        if (userAgent != null) {
+            Agent = userAgent;
+            Config.api.agent = Agent;
+            if (userAgent == agentInitial) AgentTitle = agentTitleInitial;
+            else {
+                AgentTitle = agentTitleChanged;
                 SaveEnabled = true;
             }
-            else IgnoreWorldTitle = ignoreWorldTitleInitial;
-            CheckRegionsVsInitial();
         }
+    }
 
-        void CheckRegionsVsInitial() {
-            if (IgnoreContinent == ignoreContinentInitial && IgnoreWorld == ignoreWorldInitial)
-                IgnoreRegionsTitle = ignoreRegionsTitleInitial;
-            else IgnoreRegionsTitle = ignoreRegionsTitleChanged;
-        }
-
-        [RelayCommand]
-        async Task RevertClicked() {
-            if (!SaveEnabled) {
-                await Application.Current.MainPage.DisplayAlert("Success?", "Nothing to revert", "OK");
-                return;
+    [RelayCommand]
+    async Task UsernameClicked() {
+        string userUsername = await Application.Current.MainPage.DisplayPromptAsync(
+            usernameTitleInitial, "New Ubisoft username (email):", initialValue: Username, cancel: "CANCEL"
+        );
+        if (userUsername != null) {
+            Username = userUsername;
+            Config.api.username = Username;
+            if (userUsername == usernameInitial) UsernameTitle = usernameTitleInitial;
+            else {
+                UsernameTitle = usernameTitleChanged;
+                SaveEnabled = true;
             }
-
-            AccountId = accountIdInitial;
-            AccountIdTitle = accountIdTitleInitial;
-
-            Agent = agentInitial;
-            AgentTitle = agentTitleInitial;
-
-            Password = passwordInitial;
-            PasswordTitle = passwordTitleInitial;
-
-            Username = usernameInitial;
-            UsernameTitle = usernameTitleInitial;
-
-            IgnoreContinent = ignoreContinentInitial;
-            IgnoreWorld = ignoreWorldInitial;
-
-            SaveEnabled = false;
-            await Application.Current.MainPage.DisplayAlert("Success", "Unsaved changes have been reverted", "OK");
         }
+    }
 
-        [RelayCommand]
-        async Task SaveClicked() {
-            if (!await Application.Current.MainPage.DisplayAlert(
-                "Question", $"Are you sure you want to save settings to the file at {Config.configFile} ?", "YES", "CANCEL"
-            ))
-                return;
+    [RelayCommand]
+    async Task PasswordClicked() {
+        string userPassword = await Application.Current.MainPage.DisplayPromptAsync(
+            passwordTitleInitial, "New Ubisoft password:", initialValue: Password, cancel: "CANCEL"
+        );
+        if (userPassword != null) {
+            Password = userPassword;
+            Config.api.password = Password;
+            if (userPassword == passwordInitial) PasswordTitle = passwordTitleInitial;
+            else {
+                PasswordTitle = passwordTitleChanged;
+                SaveEnabled = true;
+            }
+        }
+    }
 
-            Config.Write();
+    partial void OnIgnoreContinentChanged(bool value) {
+        if (IgnoreContinent != ignoreContinentInitial) {
+            Config.myMaps.ignoreRegionContinent = IgnoreContinent;
+            IgnoreContinentTitle = ignoreContinentTitleChanged;
+            SaveEnabled = true;
+        }
+        else IgnoreContinentTitle = ignoreContinentTitleInitial;
+        CheckRegionsVsInitial();
+    }
 
-            accountIdInitial = AccountId;
-            agentInitial = Agent;
-            passwordInitial = Password;
-            usernameInitial = Username;
-            ignoreContinentInitial = IgnoreContinent;
-            ignoreWorldInitial = IgnoreWorld;
+    partial void OnIgnoreWorldChanged(bool value) {
+        if (IgnoreWorld != ignoreWorldInitial) {
+            Config.myMaps.ignoreRegionWorld = IgnoreWorld;
+            IgnoreWorldTitle = ignoreWorldTitleChanged;
+            SaveEnabled = true;
+        }
+        else IgnoreWorldTitle = ignoreWorldTitleInitial;
+        CheckRegionsVsInitial();
+    }
 
-            AccountIdTitle = accountIdTitleInitial;
-            AgentTitle = agentTitleInitial;
-            PasswordTitle = passwordTitleInitial;
-            UsernameTitle = usernameTitleInitial;
+    void CheckRegionsVsInitial() {
+        if (IgnoreContinent == ignoreContinentInitial && IgnoreWorld == ignoreWorldInitial)
             IgnoreRegionsTitle = ignoreRegionsTitleInitial;
-            IgnoreContinentTitle = ignoreContinentTitleInitial;
-            IgnoreWorldTitle = ignoreWorldTitleInitial;
+        else IgnoreRegionsTitle = ignoreRegionsTitleChanged;
+    }
 
-            SaveEnabled = false;
-            await Application.Current.MainPage.DisplayAlert("Success", $"Settings saved", "OK");
+    [RelayCommand]
+    async Task RevertClicked() {
+        if (!SaveEnabled) {
+            await Application.Current.MainPage.DisplayAlert("Success?", "Nothing to revert", "OK");
+            return;
         }
+
+        AccountId = accountIdInitial;
+        AccountIdTitle = accountIdTitleInitial;
+
+        Agent = agentInitial;
+        AgentTitle = agentTitleInitial;
+
+        Password = passwordInitial;
+        PasswordTitle = passwordTitleInitial;
+
+        Username = usernameInitial;
+        UsernameTitle = usernameTitleInitial;
+
+        IgnoreContinent = ignoreContinentInitial;
+        IgnoreWorld = ignoreWorldInitial;
+
+        SaveEnabled = false;
+        await Application.Current.MainPage.DisplayAlert("Success", "Unsaved changes have been reverted", "OK");
+    }
+
+    [RelayCommand]
+    async Task SaveClicked() {
+        if (!await Application.Current.MainPage.DisplayAlert(
+            "Question", $"Are you sure you want to save settings to the file at {Config.configFile} ?", "YES", "CANCEL"
+        ))
+            return;
+
+        Config.Write();
+
+        accountIdInitial = AccountId;
+        agentInitial = Agent;
+        passwordInitial = Password;
+        usernameInitial = Username;
+        ignoreContinentInitial = IgnoreContinent;
+        ignoreWorldInitial = IgnoreWorld;
+
+        AccountIdTitle = accountIdTitleInitial;
+        AgentTitle = agentTitleInitial;
+        PasswordTitle = passwordTitleInitial;
+        UsernameTitle = usernameTitleInitial;
+        IgnoreRegionsTitle = ignoreRegionsTitleInitial;
+        IgnoreContinentTitle = ignoreContinentTitleInitial;
+        IgnoreWorldTitle = ignoreWorldTitleInitial;
+
+        SaveEnabled = false;
+        await Application.Current.MainPage.DisplayAlert("Success", $"Settings saved", "OK");
     }
 }

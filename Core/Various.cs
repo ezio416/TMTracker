@@ -1,35 +1,35 @@
 // c 2023-01-12
-// m 2023-03-26
+// m 2023-03-27
 
-namespace TMT.Core {
-    class Various {
-        public static bool IsCharHex(char ch) {
-            if ('0' <= ch && ch <= '9' || 'A' <= ch && ch <= 'F' || 'a' <= ch && ch <= 'f')
-                return true;
-            return false;
-        }
+namespace TMT.Core;
 
-        public static int IsoToUnix(string isoTimestamp) {
-            DateTime date = DateTime.ParseExact(isoTimestamp, "yyyy-MM-dd'T'HH:mm:ss'Z'", null, System.Globalization.DateTimeStyles.RoundtripKind);
-            return (int)date.ToUniversalTime().Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
-        }
+class Various {
+    public static bool IsCharHex(char ch) {
+        if ('0' <= ch && ch <= '9' || 'A' <= ch && ch <= 'F' || 'a' <= ch && ch <= 'f')
+            return true;
+        return false;
+    }
 
-        public static void Log(string msg = "", string category = "misc", string file = "tmt.log") {
-            category = category.ToUpper();
-            using StreamWriter sw = File.AppendText($"{Config.dirLogs}/{file}");
-            sw.WriteLine($"{Now(true)}  {category}  {msg}");
-        }
+    public static int IsoToUnix(string isoTimestamp) {
+        DateTime date = DateTime.ParseExact(isoTimestamp, "yyyy-MM-dd'T'HH:mm:ss'Z'", null, System.Globalization.DateTimeStyles.RoundtripKind);
+        return (int)date.ToUniversalTime().Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
+    }
 
-        public static string Now(bool timezone = false) {
-            string now = DateTime.Now.ToString("s").Replace("T", " ");
-            if (timezone)
-                now += $" {TimeZoneInfo.Local.ToString().Substring(4, 6)}";
-            return now;
-        }
+    public static void Log(string msg = "", string category = "misc", string file = "tmt.log") {
+        category = category.ToUpper();
+        using StreamWriter sw = File.AppendText($"{Config.dirLogs}/{file}");
+        sw.WriteLine($"{Now(true)}  {category}  {msg}");
+    }
 
-        public static string UnixToIso(double unixTimestamp) {
-            DateTime date = new(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
-            return date.AddSeconds(unixTimestamp).ToUniversalTime().ToString("u").Replace(" ", "T");
-        }
+    public static string Now(bool timezone = false) {
+        string now = DateTime.Now.ToString("s").Replace("T", " ");
+        if (timezone)
+            now += $" {TimeZoneInfo.Local.ToString().Substring(4, 6)}";
+        return now;
+    }
+
+    public static string UnixToIso(double unixTimestamp) {
+        DateTime date = new(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
+        return date.AddSeconds(unixTimestamp).ToUniversalTime().ToString("u").Replace(" ", "T");
     }
 }

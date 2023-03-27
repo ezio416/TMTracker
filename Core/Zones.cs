@@ -1,58 +1,58 @@
 // c 2023-01-13
 // m 2023-03-26
 
-namespace TMT.Core {
-    class Zones {
-        // using L1
-        static readonly Dictionary<string, string> _zones = new();
-        public static async Task<Dictionary<string, string>> Get() {
-            if (_zones.Count > 0)
-                return _zones;
+namespace TMT.Core;
 
-            int ignoreLevel = 1;
-            Dictionary<string, Dictionary<string, string>> parentLookup = new();
+class Zones {
+    // using L1
+    static readonly Dictionary<string, string> _zones = new();
+    public static async Task<Dictionary<string, string>> Get() {
+        if (_zones.Count > 0)
+            return _zones;
 
-            HttpClient[] clients = await Auth.GetClients();
+        int ignoreLevel = 1;
+        Dictionary<string, Dictionary<string, string>> parentLookup = new();
 
-            using HttpResponseMessage response = await clients[0].GetAsync("zones");
-            string responseString = await response.Content.ReadAsStringAsync();
-            Zone[] responseZones = JsonSerializer.Deserialize<Zone[]>(responseString);
+        HttpClient[] clients = await Auth.GetClients();
 
-            foreach (Zone zone in responseZones)
-                parentLookup.Add(
-                    zone.zoneId,
-                    new Dictionary<string, string>() {
-                        {"name", zone.name},
-                        {"parentId", zone.parentId}
-                    }
-                );
+        using HttpResponseMessage response = await clients[0].GetAsync("zones");
+        string responseString = await response.Content.ReadAsStringAsync();
+        Zone[] responseZones = JsonSerializer.Deserialize<Zone[]>(responseString);
 
-            foreach (KeyValuePair<string, Dictionary<string, string>> zone in new Dictionary<string, Dictionary<string, string>>(parentLookup)) {
-                string zoneId = zone.Key;
-                List<string> zoneParts = new() { parentLookup[zoneId]["name"] };
+        foreach (Zone zone in responseZones)
+            parentLookup.Add(
+                zone.zoneId,
+                new Dictionary<string, string>() {
+                    {"name", zone.name},
+                    {"parentId", zone.parentId}
+                }
+            );
 
-                string parentId = parentLookup[zoneId]["parentId"];
-                if (parentId != null) {
-                    zoneParts.Add(parentLookup[parentId]["name"]);
-                    string g0ParentId = parentLookup[parentId]["parentId"];
-                    if (g0ParentId != null) {
-                        zoneParts.Add(parentLookup[g0ParentId]["name"]);
-                        string g1ParentId = parentLookup[g0ParentId]["parentId"];
-                        if (g1ParentId != null) {
-                            zoneParts.Add(parentLookup[g1ParentId]["name"]);
-                            string g2ParentId = parentLookup[g1ParentId]["parentId"];
-                            if (g2ParentId != null) {
-                                zoneParts.Add(parentLookup[g2ParentId]["name"]);
-                                string g3ParentId = parentLookup[g2ParentId]["parentId"];
-                                if (g3ParentId != null)
-                                    zoneParts.Add(parentLookup[g3ParentId]["name"]);
-                            }
+        foreach (KeyValuePair<string, Dictionary<string, string>> zone in new Dictionary<string, Dictionary<string, string>>(parentLookup)) {
+            string zoneId = zone.Key;
+            List<string> zoneParts = new() { parentLookup[zoneId]["name"] };
+
+            string parentId = parentLookup[zoneId]["parentId"];
+            if (parentId != null) {
+                zoneParts.Add(parentLookup[parentId]["name"]);
+                string g0ParentId = parentLookup[parentId]["parentId"];
+                if (g0ParentId != null) {
+                    zoneParts.Add(parentLookup[g0ParentId]["name"]);
+                    string g1ParentId = parentLookup[g0ParentId]["parentId"];
+                    if (g1ParentId != null) {
+                        zoneParts.Add(parentLookup[g1ParentId]["name"]);
+                        string g2ParentId = parentLookup[g1ParentId]["parentId"];
+                        if (g2ParentId != null) {
+                            zoneParts.Add(parentLookup[g2ParentId]["name"]);
+                            string g3ParentId = parentLookup[g2ParentId]["parentId"];
+                            if (g3ParentId != null)
+                                zoneParts.Add(parentLookup[g3ParentId]["name"]);
                         }
                     }
                 }
-                _zones[zoneId] = string.Join(',', zoneParts.Take(zoneParts.Count - ignoreLevel));
             }
-            return _zones;
+            _zones[zoneId] = string.Join(',', zoneParts.Take(zoneParts.Count - ignoreLevel));
         }
+        return _zones;
     }
 }
