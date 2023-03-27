@@ -23,7 +23,7 @@
                            CornerRadius="0">
                         <Grid RowDefinitions="*, *"
                               ColumnDefinitions="*, *">
-                            <Label Text="{Binding mapName}"
+                            <Label Text="{Binding mapName.text}"
                                    MaxLines="1"
                                    Grid.Row="0"
                                    Grid.Column="0"/>

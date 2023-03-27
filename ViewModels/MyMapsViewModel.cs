@@ -51,7 +51,7 @@ namespace TMT.ViewModels {
 
                 foreach (Record record in map.records) {
                     record.mapId = map.mapId;
-                    record.mapName = map.mapName.text;
+                    record.mapName = map.mapName;
                     accountIds.Add(record.accountId);
                     records.Add($"{record.mapId},{record.accountId}", record);
                 }

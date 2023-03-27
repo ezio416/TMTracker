@@ -102,7 +102,7 @@ namespace TMT.Core {
 
             using HttpResponseMessage response = await clients[1].GetAsync($"api/token/map?length={count}");
             string responseString = await response.Content.ReadAsStringAsync();
-            MyMap[] myMaps = JsonSerializer.Deserialize<MyMap[]>(JsonSerializer.Deserialize<_MapList>(responseString).mapList);
+            List<MyMap> myMaps = JsonSerializer.Deserialize<List<MyMap>>(JsonSerializer.Deserialize<_MapList>(responseString).mapList);
 
             foreach (MyMap map in myMaps) {
                 if (map.uploadedUnix < 1_600_000_000) {
@@ -116,6 +116,8 @@ namespace TMT.Core {
                 map.silverTime /= 1000;
                 map.uploadedIsoUtc = Various.UnixToIso(map.uploadedUnix);
             }
+
+            myMaps.RemoveAll(map => Config.myMaps.ignoreMapIds.Contains(map.mapId));
 
             return (from entry in myMaps orderby entry.uploadedUnix descending select entry).ToArray();
         }
