@@ -18,6 +18,7 @@ public class Record {
     public object       recordScore     { get; set; }
     [JsonPropertyName("score")]
     public float        time            { get; set; }
+    public string       timeFormatted   { get; set; }
     [JsonPropertyName("timestamp")]
     public string       timestampIsoUtc { get; set; }
     public int          timestampUnix   { get; set; }

@@ -4,6 +4,22 @@
 namespace TMT.Core;
 
 class Various {
+    public static string FormatSeconds(double num) {
+        int Num = (int)(num * 1000);
+        int thou = Num % 1000;
+        int seconds = Num / 1000;
+        int minutes = seconds / 60;
+        seconds %= 60;
+        int hours = minutes / 60;
+        minutes %= 60;
+
+        if (hours > 0)
+            return $"{hours}:{minutes:D2}:{seconds:D2}.{thou:D3}";
+        if (minutes > 0)
+            return $"{minutes}:{seconds:D2}.{thou:D3}";
+        return $"{seconds}.{thou:D3}";
+    }
+
     public static bool IsCharHex(char ch) {
         if ('0' <= ch && ch <= '9' || 'A' <= ch && ch <= 'F' || 'a' <= ch && ch <= 'f')
             return true;

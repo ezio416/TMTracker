@@ -107,4 +107,14 @@ public partial class MyMapsViewModel : ObservableObject {
     async Task ViewRecordsPage() {
         await Shell.Current.GoToAsync(nameof(RecentRecordsPage));
     }
+
+    [RelayCommand]
+    async Task TapMap(MyMap mapp) {
+        await Shell.Current.GoToAsync(
+            nameof(MapPage),
+            new Dictionary<string, object> {
+                { "Mapp", mapp }
+            }
+        );
+    }
 }

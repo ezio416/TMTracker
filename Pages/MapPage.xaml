@@ -1,22 +1,69 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
              xmlns:models="clr-namespace:TMT.Models"
-             x:Class="TMT.Pages.MapPage"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:viewmodels="clr-namespace:TMT.ViewModels"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TMT.Pages.MapPage"
              x:DataType="viewmodels:MapViewModel"
-             Padding="0"
+             Padding="5"
              BackgroundColor="{StaticResource Gray700}">
 
     <ContentPage.Behaviors>
         <mct:StatusBarBehavior StatusBarColor="{StaticResource Gray700}"/>
+        <toolkit:EventToCommandBehavior EventName="Appearing"
+                                        Command="{Binding AppearingCommand}"/>
     </ContentPage.Behaviors>
-    
-    <VerticalStackLayout>
-        <Label Text="map"
-               VerticalOptions="Center" 
-               HorizontalOptions="Center"/>
-    </VerticalStackLayout>
-    
+
+    <Grid RowDefinitions="*, 4*">
+        <Grid ColumnDefinitions="*, 1.5*"
+              Grid.Row="0">
+            <Image Grid.Column="0">
+                <Image.Source>
+                    <UriImageSource Uri="{Binding Mapp.thumbnailUrl}"
+                                    CacheValidity="999:00:00:00"/>
+                </Image.Source>
+            </Image>
+            <Frame BackgroundColor="{StaticResource Gray700}"
+                   Grid.Column="1">
+                <VerticalStackLayout>
+                    <Label Text="{Binding Mapp.mapName.text}"/>
+                    <Label Text="{Binding Uploaded}"/>
+                    <Label Text="{Binding AuthorTime}"/>
+                    <Label Text="{Binding GoldTime}"/>
+                    <Label Text="{Binding SilverTime}"/>
+                    <Label Text="{Binding BronzeTime}"/>
+                </VerticalStackLayout>
+            </Frame>
+        </Grid>
+        <CollectionView Grid.Row="1"
+                        ItemsSource="{Binding Mapp.records}"
+                        SelectionMode="None">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:Record">
+                    <Grid>
+                        <Frame HeightRequest="50"
+                               CornerRadius="0">
+                            <Grid RowDefinitions="*, *"
+                                  ColumnDefinitions="*, *">
+                                <Label Text="{Binding position}"
+                                       Grid.Row="0"
+                                       Grid.Column="0"/>
+                                <Label Text="{Binding timeFormatted}"
+                                       Grid.Row="0"
+                                       Grid.Column="1"/>
+                                <Label Text="{Binding accountName}"
+                                       Grid.Row="1"
+                                       Grid.Column="0"/>
+                                <Label Text="{Binding timestampIsoUtc}"
+                                       Grid.Row="1"
+                                       Grid.Column="1"/>
+                            </Grid>
+                        </Frame>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
 </ContentPage>

@@ -35,6 +35,7 @@ public class Records {
 
         Dictionary<string, Record> recordsLookup = new();
         foreach (Record record in records) {
+            record.timeFormatted = Various.FormatSeconds(record.time);
             record.timestampIsoUtc = record.timestampIsoUtc.Replace("+00:00", "Z");
             recordsLookup.Add($"{record.mapId},{record.accountId}", record);
         }
@@ -57,6 +58,7 @@ public class Records {
         foreach (Record record in records) {
             record.mapUid = mapUid;
             record.time /= 1000;
+            record.timeFormatted = Various.FormatSeconds(record.time);
             record.zoneName = zones[record.zoneId];
         }
 

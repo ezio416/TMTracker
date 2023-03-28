@@ -16,14 +16,6 @@
 
         <Frame>
             <VerticalStackLayout>
-                <Label Text="{Binding AccountIdTitle}"/>
-                <Button Command="{Binding AccountIdClickedCommand}"
-                        Text="{Binding AccountId}"/>
-            </VerticalStackLayout>
-        </Frame>
-
-        <Frame>
-            <VerticalStackLayout>
                 <Label Text="{Binding AgentTitle}"/>
                 <Button Command="{Binding AgentClickedCommand}"
                         Text="{Binding Agent}"/>
