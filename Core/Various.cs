@@ -46,6 +46,6 @@ class Various {
 
     public static string UnixToIso(double unixTimestamp) {
         DateTime date = new(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
-        return date.AddSeconds(unixTimestamp).ToUniversalTime().ToString("u").Replace(" ", "T");
+        return date.AddSeconds(unixTimestamp).ToUniversalTime().ToString("u");
     }
 }

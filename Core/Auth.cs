@@ -50,6 +50,8 @@ class Auth {
 
         client2.DefaultRequestHeaders.Add("Authorization", token2);
 
+        Various.Log("got new clients", "auth");
+
         _clients = new[] { client1, client2 };
         return _clients;
     }

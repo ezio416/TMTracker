@@ -98,7 +98,7 @@ class Maps {
     }
 
     // using L2
-    public static async Task<MyMap[]> GetMyMaps(int count = 1000) {
+    public static async Task<List<MyMap>> GetMyMaps(int count = 1000) {
         HttpClient[] clients = await Auth.GetClients();
 
         using HttpResponseMessage response = await clients[1].GetAsync($"api/token/map?length={count}");
@@ -120,6 +120,6 @@ class Maps {
 
         myMaps.RemoveAll(map => Config.myMaps.ignoreMapIds.Contains(map.mapId));
 
-        return (from entry in myMaps orderby entry.uploadedUnix descending select entry).ToArray();
+        return (from entry in myMaps orderby entry.uploadedUnix descending select entry).ToList();
     }
 }

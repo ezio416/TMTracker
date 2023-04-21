@@ -40,7 +40,7 @@
                         Grid.Row="0"
                         IsEnabled="{Binding RefreshRecordsEnabled}"/>
                 <Button Command="{Binding ViewRecordsPageCommand}"
-                        Text="view records"
+                        Text="view recent records"
                         Grid.Row="1"
                         IsEnabled="{Binding ViewRecordsEnabled}"/>
             </Grid>
@@ -55,7 +55,7 @@
                         <Frame HeightRequest="50"
                                CornerRadius="0">
                             <Frame.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:MyMapsViewModel}}, Path=TapMapCommand}"
+                                <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:MyMapsViewModel}}, Path=ViewMapPageCommand}"
                                                       CommandParameter="{Binding .}"/>
                             </Frame.GestureRecognizers>
                             <Grid ColumnDefinitions="50, *, 30, 30">

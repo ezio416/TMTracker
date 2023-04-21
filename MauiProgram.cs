@@ -8,6 +8,7 @@ namespace TMT;
 public static class MauiProgram {
 	public static MauiApp CreateMauiApp() {
         Config.Init();
+        Various.Log(category: "boot");
 
 		var builder = MauiApp.CreateBuilder()
 			.UseMauiApp<App>()
@@ -17,7 +18,7 @@ public static class MauiProgram {
 				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 fonts.AddFont("CascadiaCode.ttf", "CascadiaCode");
             });
-				
+		
 		builder.Services.AddSingleton<HomePage>();
         builder.Services.AddSingleton<HomeViewModel>();
 

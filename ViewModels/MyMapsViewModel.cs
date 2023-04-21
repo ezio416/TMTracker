@@ -32,7 +32,7 @@ public partial class MyMapsViewModel : ObservableObject {
     async Task RefreshMaps() {
         Status = $"getting my maps...";
         Storage.myMaps = await Maps.GetMyMaps();
-        MapCountLabelText = $"map count: {Storage.myMaps.Length}";
+        MapCountLabelText = $"map count: {Storage.myMaps.Count}";
 
         MyMaps.Clear();
         foreach (MyMap map in Storage.myMaps)
@@ -40,13 +40,14 @@ public partial class MyMapsViewModel : ObservableObject {
 
         RefreshRecordsEnabled = true;
 
+        Various.Log("refreshed my maps", "myma");
         Status = $"updated: {Various.Now()}";
     }
 
     [RelayCommand]
     async Task RefreshRecords() {
         foreach (MyMap map in Storage.myMaps) {
-            Status = $"({Storage.myMaps.Length - i++}) getting records: {map.mapName.text}";
+            Status = $"({Storage.myMaps.Count - i++}) getting records: {map.mapName.text}";
             mapIds.Add(map.mapId);
             map.records = await Records.GetSingleMapRecords(map.mapUid);
 
@@ -90,7 +91,7 @@ public partial class MyMapsViewModel : ObservableObject {
         Status = "getting more record info...";
         string[][] singleRecordAccountGroups = Accounts.SplitAccountsToGroups(singleRecordAccountIds.ToArray(), singleRecordMapIds.Count);
         records = await Records.GetMoreRecordInfo(singleRecordAccountGroups, singleRecordMapIds.ToArray(), records);
-        string[][] multiRecordAccountGroups = Accounts.SplitAccountsToGroups(multiRecordAccountIds.ToArray(), Storage.myMaps.Length);
+        string[][] multiRecordAccountGroups = Accounts.SplitAccountsToGroups(multiRecordAccountIds.ToArray(), Storage.myMaps.Count);
         records = await Records.GetMoreRecordInfo(multiRecordAccountGroups, mapIds.ToArray(), records);
 
         Storage.myMapsRecentRecords = Records.SortRecords(records);
@@ -100,21 +101,22 @@ public partial class MyMapsViewModel : ObservableObject {
 
         ViewRecordsEnabled = true;
 
+        Various.Log("refreshed records", "myma");
         Status = $"updated: {Various.Now()}";
     }
 
     [RelayCommand]
-    async Task ViewRecordsPage() {
-        await Shell.Current.GoToAsync(nameof(RecentRecordsPage));
-    }
-
-    [RelayCommand]
-    async Task TapMap(MyMap mapp) {
+    async Task ViewMapPage(MyMap mapp) {
         await Shell.Current.GoToAsync(
             nameof(MapPage),
             new Dictionary<string, object> {
                 { "Mapp", mapp }
             }
         );
+    }
+
+    [RelayCommand]
+    async Task ViewRecordsPage() {
+        await Shell.Current.GoToAsync(nameof(RecentRecordsPage));
     }
 }
