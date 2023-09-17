@@ -1,5 +1,5 @@
 // c 2023-03-09
-// m 2023-03-27
+// m 2023-07-05
 
 namespace TMT.Models;
 
@@ -8,6 +8,7 @@ public abstract class Map {
     [JsonPropertyName("author")]
     public string          authorId       { get; set; }
     public abstract float  authorTime     { get; set; }
+    public List<string>    accountIds     { get; set; }
     public bool            badUploadTime  { get; set; }
     public abstract float  bronzeTime     { get; set; }
     public abstract Uri    downloadUrl    { get; set; }

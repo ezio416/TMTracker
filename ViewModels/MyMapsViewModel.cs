@@ -1,7 +1,8 @@
 ﻿// c 2023-03-04
-// m 2023-03-27
+// m 2023-07-04
 
 using System.Collections.ObjectModel;
+using System.Linq.Expressions;
 
 namespace TMT.ViewModels;
 
@@ -50,13 +51,20 @@ public partial class MyMapsViewModel : ObservableObject {
             Status = $"({Storage.myMaps.Count - i++}) getting records: {map.mapName.text}";
             mapIds.Add(map.mapId);
             map.records = await Records.GetSingleMapRecords(map.mapUid);
+            map.accountIds = new();
 
             foreach (Record record in map.records) {
+                map.accountIds.Add(record.accountId);
                 record.mapId = map.mapId;
                 record.mapName = map.mapName;
                 accountIds.Add(record.accountId);
                 records.Add($"{record.mapId},{record.accountId}", record);
             }
+
+            if (map.records.Count == 0)
+                continue;
+
+            records = await Records.GetMoreRecordInfo(map.accountIds.ToArray(), map.mapId, records);
         }
 
         Status = "getting account info...";
@@ -69,30 +77,30 @@ public partial class MyMapsViewModel : ObservableObject {
 
         // add records to accounts - check each map to each if each account drove it
         // split accounts to single-map / multi-map
-        List<string> singleRecordAccountIds = new();
-        HashSet<string> singleRecordMapIds = new();
-        List<string> multiRecordAccountIds = new();
-        foreach (KeyValuePair<string, Account> account in accounts) {
-            List<Record> accountRecords = new();
-            foreach (MyMap map in Storage.myMaps) {
-                string key = $"{map.mapId},{account.Value.accountId}";
-                if (records.TryGetValue(key, out Record value))
-                    accountRecords.Add(value);
-            }
-            account.Value.records = accountRecords.ToArray();
-            if (account.Value.records.Length == 1) {
-                singleRecordAccountIds.Add(account.Value.accountId);
-                singleRecordMapIds.Add(account.Value.records[0].mapId);
-            }
-            else
-                multiRecordAccountIds.Add(account.Value.accountId);
-        }
+        //List<string> singleRecordAccountIds = new();
+        //HashSet<string> singleRecordMapIds = new();
+        //List<string> multiRecordAccountIds = new();
+        //foreach (KeyValuePair<string, Account> account in accounts) {
+        //    List<Record> accountRecords = new();
+        //    foreach (MyMap map in Storage.myMaps) {
+        //        string key = $"{map.mapId},{account.Value.accountId}";
+        //        if (records.TryGetValue(key, out Record value))
+        //            accountRecords.Add(value);
+        //    }
+        //    account.Value.records = accountRecords.ToArray();
+        //    if (account.Value.records.Length == 1) {
+        //        singleRecordAccountIds.Add(account.Value.accountId);
+        //        singleRecordMapIds.Add(account.Value.records[0].mapId);
+        //    }
+        //    else
+        //        multiRecordAccountIds.Add(account.Value.accountId);
+        //}
 
-        Status = "getting more record info...";
-        string[][] singleRecordAccountGroups = Accounts.SplitAccountsToGroups(singleRecordAccountIds.ToArray(), singleRecordMapIds.Count);
-        records = await Records.GetMoreRecordInfo(singleRecordAccountGroups, singleRecordMapIds.ToArray(), records);
-        string[][] multiRecordAccountGroups = Accounts.SplitAccountsToGroups(multiRecordAccountIds.ToArray(), Storage.myMaps.Count);
-        records = await Records.GetMoreRecordInfo(multiRecordAccountGroups, mapIds.ToArray(), records);
+        //Status = "getting more record info...";
+        //string[][] singleRecordAccountGroups = Accounts.SplitAccountsToGroups(singleRecordAccountIds.ToArray(), singleRecordMapIds.Count);
+        //records = await Records.GetMoreRecordInfo(singleRecordAccountGroups, singleRecordMapIds.ToArray(), records);
+        //string[][] multiRecordAccountGroups = Accounts.SplitAccountsToGroups(multiRecordAccountIds.ToArray(), Storage.myMaps.Count);
+        //records = await Records.GetMoreRecordInfo(multiRecordAccountGroups, mapIds.ToArray(), records);
 
         Storage.myMapsRecentRecords = Records.SortRecords(records);
         RecentRecords.Clear();
